@@ -1,0 +1,116 @@
+plugins {
+    id 'java'
+
+    id 'war'
+    id "org.springframework.boot" version "2.5.7"
+    id "com.github.node-gradle.node" version "3.1.0"
+
+}
+
+apply plugin: 'war'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+
+
+test {
+    useJUnitPlatform()
+}
+
+repositories {
+    mavenCentral()
+    maven { url "https://repository.jboss.org/nexus/content/repositories/releases/" }    
+}
+
+/**
+ * Per veure les dependecies:
+ * > ./gradlew dependencies > dependencies.txt
+ * */
+
+dependencies {
+    developmentOnly ('org.apache.tomcat.embed:tomcat-embed-jasper') {
+        exclude group: 'org.apache.tomcat.embed', module:'tomcat-embed-core'
+    }
+
+
+    implementation ('org.springframework.boot:spring-boot-starter-web'){
+        exclude module: "spring-boot-starter-tomcat"
+    }
+
+     
+    
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-webflux'
+    
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
+    providedRuntime  ('org.springframework.boot:spring-boot-starter-tomcat') {
+        exclude group: 'org.apache.tomcat.embed', module:'tomcat-embed-el'
+    }
+
+    implementation group: 'org.apache.commons', name: 'commons-csv', version: '1.9.0'
+
+
+    providedCompile 'javax.servlet:javax.servlet-api:4.0.0'
+    implementation 'javax.servlet:jstl:1.2'
+
+    testImplementation ('org.springframework.boot:spring-boot-starter-test') {
+        /* exclude group: 'org.slf4j', module:'slf4j-api'*/
+        exclude group: 'org.springframework.boot', module:'spring-boot-starter'
+        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+    }
+
+    testImplementation 'junit:junit:4.12'
+
+
+    //per llegir el fitxer
+    // https://mvnrepository.com/artifact/commons-io/commons-io
+    testImplementation group: 'commons-io', name: 'commons-io', version: '2.11.0'
+
+
+    //implementation 'org.springframework.boot:spring-boot-starter-cache'
+    //implementation ('org.springframework.boot:spring-boot-starter-actuator'){}
+
+
+//    implementation ('org.springframework.boot:spring-boot-starter-data-jpa'){
+//        exclude group: 'org.springframework.boot', module:'spring-boot-starter-logging'
+//        exclude group: 'org.slf4j', module:'slf4j-api'
+//        exclude group: 'org.springframework.boot', module:'spring-boot-starter'
+//    }
+    //tornar a psoar si tenim bbdd
+    //implementation 'org.springframework:spring-tx'
+    
+    
+
+    //NO se perque collons ho necessitem, si no tenim cap dataSoruce, ni cap depednencia que l'afegeixi!!!
+    // En la execucio local ens funciona, pero al pujar a develop tenim un error de
+    // [m:logRequestInterceptor] Creant LogRequestInterceptor 2022-01-18 10:50:29.410  WARN 5676 --- [http-nio-8080-exec-342] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'dataSource' defined in class path resource [org/springframework/boot/autoconfigure/jdbc/DataSourceConfiguration$Tomcat.class]: Bean instantiation via factory method failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate [org.apache.tomcat.jdbc.pool.DataSource]: Factory method 'dataSource' threw exception; nested exception is org.springframework.boot.autoconfigure.jdbc.DataSourceProperties$DataSourceBeanCreationException: Failed to determine a suitable driver class
+    //providedCompile 'com.oracle.jdbc:ojdbc7:12.1.0.2.0'
+    //providedCompile 'com.oracle.jdbc:ucp:12.1.0.2.0'
+    //providedCompile 'com.oracle.jdbc:ons:12.1.0'
+
+    //testImplementation ('org.junit.jupiter:junit-jupiter:5.6.0')
+    //testImplementation 'com.h2database:h2:1.4.200'
+
+}
+
+group = 'org.mbatet.calories'
+
+sourceCompatibility = '1.8'
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+configurations.all {
+    resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
+}
+
+
+war.archiveBaseName="calories-counter"
+
+
+bootRun {
+    jvmArgs('-Dspring.output.ansi.enabled=always')
+    //String springProfilesActive = 'spring.profiles.active'
+    //systemProperty springProfilesActive, System.getProperty(springProfilesActive)
+}
