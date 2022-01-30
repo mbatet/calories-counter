@@ -5,7 +5,7 @@ import org.apache.commons.logging.LogFactory;
 import org.mbatet.calories.model.Constants;
 import org.mbatet.calories.model.Dia;
 import org.mbatet.calories.model.Interval;
-import org.mbatet.calories.model.Stats;
+import org.mbatet.calories.model.stats.*;
 import org.mbatet.calories.service.parser.CsvParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -71,96 +71,39 @@ public class WeightStatsService {
     public Stats getStatsFromIntervals( List<Interval> intervals)
     {
 
-        if( intervals==null || intervals.size()==0 )
-        {
-            return new Stats();
-        }
 
-        //TODO: fer una utilitat que faci aquest codi, que es repeteix en cada bloc
-        //TODO: Arreglar noms de variables!!!
-        Float weightLossAvrgCals  = 0F;
-        Float weightGainAvrgCals  = 0F;
-        Float maintenanceAvrgeCals = 0F;
-
-        //les calories d'activitat que hem fet en peridoes de perdua/ganancia/manteniment
-        Float weightLossAvgActivityCals  = 0F;
-        Float weightGainAvgActivityCals  = 0F;
-        Float maintenanceAvgActivityCals = 0F;
-
-        //Havent restat les calories del exercici
-        Float weightLossAvgAdjustedCals = 0F;
-        Float weightGainAvgAdjustedCals = 0F;
-        Float maintenanceAvgAdjustedCals = 0F;
-
-        int weightLossIntervals  = 0;
-        int weightGainIntervals  = 0;
-        int maintenanceIntervals = 0;
-
-
-
+        Stats stats = new Stats();
 
         for(Interval interval: intervals)
         {
 
-            //TODO: fer una utilitat que faci aquest codi, que es repeteix en cada bloc
+            //Hi ha hagut un guany de pes
             if( interval.getWeigthDiff() > Constants.MIN_AMMOUNT_WE_CONSIDER_IS_LOSING_WEIGHT)
             {
+                stats.getWeightGainStats().addInterval(interval);
 
-                //fer una utilitat que faci aquest codi, que es repeteix en cada bloc
-                weightGainAvrgCals+=interval.getAvgConsumedCals();
-                weightGainAvgActivityCals+=interval.getAvgActivityCals();
-                weightGainAvgAdjustedCals+=interval.getAvgAdjustedCals();
-                weightGainIntervals++;
 
             }
             else if( interval.getWeigthDiff() < -Constants.MIN_AMMOUNT_WE_CONSIDER_IS_LOSING_WEIGHT ) //hem perdut pes
             {
-                weightLossAvrgCals+=interval.getAvgConsumedCals();
-                weightLossAvgActivityCals+=interval.getAvgActivityCals();
-                weightLossAvgAdjustedCals+=interval.getAvgAdjustedCals();
-                weightLossIntervals++;
+                //ens hem mantingut
+                stats.getMaintenanceStats().addInterval(interval);
+
             }
             else
             {
-                maintenanceAvrgeCals+=interval.getAvgConsumedCals();
-                maintenanceAvgActivityCals+=interval.getAvgActivityCals();
-                maintenanceAvgAdjustedCals+=interval.getAvgAdjustedCals();
-                maintenanceIntervals++;
+                //hem perdut pes
+                stats.getWeightLossStats().addInterval(interval);
             }
 
-
         }
 
-
-        Stats stats = new Stats();
-
-       if( weightGainIntervals > 0 )
-       {
-           stats.setWeightGainAvgCals(weightGainAvrgCals/(float)weightGainIntervals);
-           stats.setWeightGainActivityAvgCals(weightGainAvgActivityCals/(float)weightGainIntervals);
-           stats.setWeightGainAvgAdjustedCals(weightGainAvgAdjustedCals/(float)weightGainIntervals);
-
-       }
-
-       if( maintenanceIntervals > 0 )
-       {
-           stats.setMaintenanceAvgCals(maintenanceAvrgeCals/(float)maintenanceIntervals);
-           stats.setMaintenanceActivityAvgCals(maintenanceAvgActivityCals/(float)maintenanceIntervals);
-           stats.setMaintenanceAvgAdjustedCals(maintenanceAvgAdjustedCals/(float)maintenanceIntervals);
-       }
-
-        if( weightLossIntervals > 0 )
-        {
-            stats.setWeightLossAvgCals(weightLossAvrgCals/(float)weightLossIntervals);
-            stats.setWeightLossActivityAvgCals(weightLossAvgActivityCals/(float)weightLossIntervals);
-            stats.setWeightLossAvgAdjustedCals(weightLossAvgAdjustedCals/(float)weightLossIntervals);
-        }
-
-
-        stats.validate();
+        stats.calculate();
+        //stats.validate();
 
         return stats;
     }
+
 
     public  List<Interval> getIntervals(List<Dia> dies)
     {
