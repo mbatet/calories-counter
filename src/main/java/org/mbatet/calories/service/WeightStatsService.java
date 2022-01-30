@@ -82,13 +82,11 @@ public class WeightStatsService {
             {
                 stats.getWeightGainStats().addInterval(interval);
 
-
             }
             else if( interval.getWeigthDiff() < -Constants.MIN_AMMOUNT_WE_CONSIDER_IS_LOSING_WEIGHT ) //hem perdut pes
             {
                 //ens hem mantingut
                 stats.getMaintenanceStats().addInterval(interval);
-
             }
             else
             {
