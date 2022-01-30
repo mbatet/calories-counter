@@ -1,0 +1,10 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="caloriesCounterApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+    <module name="calories-counter.main" />
+    <option name="SPRING_BOOT_MAIN_CLASS" value="org.mbatet.calories.CaloriesCounterApplication" />
+    <option name="ALTERNATIVE_JRE_PATH" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

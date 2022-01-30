@@ -1,0 +1,86 @@
+
+app:
+  name: 'Calories Counter'
+
+
+spring:
+  profiles:
+    active: local_execution #for testing
+  application:
+    name: calories
+  mvc:
+    view:
+      prefix: /WEB-INF/views/
+      suffix: .jsp
+  main:
+    allow-bean-definition-overriding: true
+server:
+  servlet:
+    context-path: /calories-counter
+  name: http://localhost:8080
+  port: 8080
+  ssl:
+    enabled: false
+
+dipta:
+  security:
+#    ldap:
+#      secure:
+#        - patterns: /rest/**
+#          roles: ADMINISTRADOR
+    ma3:
+      #url: http://develop01.intranet.dtgna:8000/ma3/rest
+      url: https://dev01.intranet.dtgna:8843/ma3/rest/
+      load-clients: true
+    simple:
+      password: Sh1Tm00N
+      username: rest-servei
+    cas:
+      server-url: https://actio-dev.dipta.cat/cas
+      logoutUrl: ${dipta.security.cas.server-url}/logout
+      #server-url: https://actio-pre.dipta.cat/cas
+      secure:
+        - patterns : /**
+          roles : ALTANET
+        - patterns: /admin/**
+          roles: ADMIN
+      unsecure: [ '/img/**','/css/**','/js/**', '/*.css', '/inspinia/**', '/public/**']
+
+
+logging:
+  file:
+    path: ${CATALINA_HOME:.}/logs
+    name: ${logging.file.path}/${spring.application.name}.log
+  level:
+    org.springframework: warn
+    org.mbatet: debug
+    org.mbatet.calories.controller: debug
+    org.mbatet.calories.service: debug
+    root: ERROR
+
+---
+# test profile
+spring:
+  config:
+    activate:
+      on-profile: test
+
+server:
+  servlet:
+    context-path: /calories-counter
+  name: http://localhost:8080
+  port: 8080
+  ssl:
+    enabled: false
+
+---
+#PRO
+spring:
+  config:
+    activate:
+      on-profile: production
+
+#No ho necessitarem, docns no ho desplegarem ni a pre ni a pro
+server:
+  name: http://localhost:8080
+  port: 80
