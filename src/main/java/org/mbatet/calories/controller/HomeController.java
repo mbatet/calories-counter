@@ -2,6 +2,7 @@ package org.mbatet.calories.controller;
 
 
 import org.mbatet.calories.model.*;
+import org.mbatet.calories.model.stats.Stats;
 import org.mbatet.calories.service.WeightStatsService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -87,7 +88,10 @@ public class HomeController {
 		model.addAttribute("dies", dies);
 		model.addAttribute("type", form.getType());
 		model.addAttribute("intervals", intervals);
+
+		//fer diferent, un objecte global amb les stats o
 		model.addAttribute("stats", stats);
+
 
 		String title =  Constants.CHART_TITTLE.get(form.getType());
 
