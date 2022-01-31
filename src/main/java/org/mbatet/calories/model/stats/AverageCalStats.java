@@ -2,13 +2,15 @@ package org.mbatet.calories.model.stats;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.mbatet.calories.model.Dia;
 import org.mbatet.calories.model.Interval;
 import org.mbatet.calories.service.Utils;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
-public abstract class AvgCalStats {
+public abstract class AverageCalStats {
 
     //TODO: hauriem de tenir 3 tipus de Stats, una de WeightLossIntervalsStats, una de WeightGainIntervalsStats, una de MaintenanceIntervalsStats
     //TODO: o a la inversa, hauriem de tenir 3 tipus de Stats, una de AverageCalsStats, una de AdjustedCalStats, una de ActivityStats
@@ -18,39 +20,37 @@ public abstract class AvgCalStats {
     Float activityCals = 0F;
     Float adjustedCals = 0F;
     Float consumedCals = 0F;
-
     Float recomendedCals;
 
-    boolean notAlloweed  = false;
+    boolean notEnoughData = false;
 
 
 
     List<Interval> intervals = new ArrayList<Interval>();
 
 
-    private static final Log log = LogFactory.getLog(AvgCalStats.class.getName());
+    private static final Log log = LogFactory.getLog(AverageCalStats.class.getName());
 
-    public AvgCalStats()
+    public AverageCalStats()
     {
 
     }
 
     public abstract String getTitle();
 
-    public boolean isNotAllowed()
+    public boolean isNotEnoughData()
     {
-
         if(this.intervals.size()==0)
         {
             return true;
         }
 
-        return this.notAlloweed;
+        return this.notEnoughData;
     }
 
-    public void setNotAllowed(boolean notAllowed)
+    public void setNotEnoughData(boolean notEnough)
     {
-        this.notAlloweed = notAllowed;
+        this.notEnoughData = notEnough;
     }
 
 
@@ -117,5 +117,28 @@ public abstract class AvgCalStats {
         throw new Exception("Pendent de implementar");
 
 
+    }
+
+
+    public static class SortStats implements Comparator<AverageCalStats> {
+        @Override
+        public int compare(AverageCalStats a, AverageCalStats b) {
+
+
+
+            if( a.isNotEnoughData() || a.getRecomendedCals() < b.getRecomendedCals() )
+            {
+                return -1;
+            }
+
+            if( b.isNotEnoughData() || a.getRecomendedCals() > b.getRecomendedCals() )
+            {
+                return 1;
+            }
+
+
+            return 0;
+
+        }
     }
 }

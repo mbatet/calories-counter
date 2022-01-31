@@ -178,6 +178,31 @@ public class Interval {
         return rounded;
     }
 
+
+    static public int TYPE_WEIGHT_GAIN_INTERVAL = 1;
+    static public int TYPE_WEIGHT_LOSS_INTERVAL = -1;
+    static public int TYPE_MAINTENANCE_INTERVAL = 0;
+
+    public int getType()
+    {
+        if(getWeigthDiff() < -Constants.MIN_AMMOUNT_WE_CONSIDER_IS_LOSING_WEIGHT ) //hem perdut pes
+        {
+            //hem perdut pes
+            return TYPE_WEIGHT_LOSS_INTERVAL;
+
+        }
+
+        if( getWeigthDiff() > Constants.MIN_AMMOUNT_WE_CONSIDER_IS_LOSING_WEIGHT)
+        {
+            return TYPE_WEIGHT_GAIN_INTERVAL;
+
+        }
+
+        //ens hem mantingut
+        return TYPE_MAINTENANCE_INTERVAL;
+
+    }
+
     public float getAvgConsumedCals()
     {
 

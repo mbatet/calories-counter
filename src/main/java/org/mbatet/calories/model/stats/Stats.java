@@ -46,14 +46,13 @@ public class Stats {
         //necessitem mes dades
         if(weightLossStats.getRecomendedCals()!=null && weightLossStats.getRecomendedCals()>maintenanceStats.getRecomendedCals())
         {
-            maintenanceStats.setNotAllowed(true);
+            maintenanceStats.setNotEnoughData(true);
         }
 
         if(weightGainStats.getRecomendedCals()!=null && weightGainStats.getRecomendedCals()<maintenanceStats.getRecomendedCals())
         {
-            weightGainStats.setNotAllowed(true);
+            weightGainStats.setNotEnoughData(true);
         }
-
     }
 
 

@@ -77,22 +77,22 @@ public class WeightStatsService {
         for(Interval interval: intervals)
         {
 
-            //Hi ha hagut un guany de pes
-            if( interval.getWeigthDiff() > Constants.MIN_AMMOUNT_WE_CONSIDER_IS_LOSING_WEIGHT)
+            if( interval.getType() == Interval.TYPE_WEIGHT_LOSS_INTERVAL )
+            {
+                stats.getWeightLossStats().addInterval(interval);
+
+            }
+            else if( interval.getType() == Interval.TYPE_WEIGHT_GAIN_INTERVAL )
             {
                 stats.getWeightGainStats().addInterval(interval);
 
             }
-            else if( interval.getWeigthDiff() < -Constants.MIN_AMMOUNT_WE_CONSIDER_IS_LOSING_WEIGHT ) //hem perdut pes
+            else //if(  interval.getType() == Interval.TYPE_MAINTENANCE_INTERVAL )
             {
                 //ens hem mantingut
                 stats.getMaintenanceStats().addInterval(interval);
             }
-            else
-            {
-                //hem perdut pes
-                stats.getWeightLossStats().addInterval(interval);
-            }
+          
 
         }
 

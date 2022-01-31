@@ -2,7 +2,6 @@ package org.mbatet.calories.controller;
 
 
 import org.mbatet.calories.model.*;
-import org.mbatet.calories.model.stats.AvgCalStats;
 import org.mbatet.calories.model.stats.Stats;
 import org.mbatet.calories.service.WeightStatsService;
 import org.slf4j.Logger;

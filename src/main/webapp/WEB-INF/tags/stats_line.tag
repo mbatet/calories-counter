@@ -1,4 +1,4 @@
-<%@ attribute name="stats" required="true" type="org.mbatet.calories.model.stats.AvgCalStats" description="Les estadistiques"  %>
+<%@ attribute name="stats" required="true" type="org.mbatet.calories.model.stats.AverageCalStats" description="Les estadistiques"  %>
 <%@ tag import="org.mbatet.calories.model.Constants"%>
 <%@ tag import="java.lang.Math"%>
 
@@ -9,8 +9,8 @@
 
 <th scope="row">${stats.title}</th>
 <td>
-    <c:if test="${stats.notAllowed}">N/A (more data needed)</c:if>
-    <c:if test="${!stats.notAllowed}">
+    <c:if test="${stats.notEnoughData}">N/A (more data needed)</c:if>
+    <c:if test="${!stats.notEnoughData}">
         ${Math.round(stats.recomendedCals)}  (with an avrg of ${Math.round(stats.activityCals)}  consumed in activity) or ${Math.round(stats.adjustedCals)} without
     </c:if>
 

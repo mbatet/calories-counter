@@ -21,24 +21,19 @@ return "dies:" + dies.size() + ".first:"+getFirstDate() + ".last:"+getLastDate()
     </thead>
     <tbody>
     <tr>
-        <th scope="row"><b>Estimated cals for weight loss</b></th>
-        <td>
+
             <tags:stats_line stats="${stats.weightLossStats}"></tags:stats_line>
-        </td>
+
 
 
     </tr>
     <tr>
-        <th scope="row">Estimated maintenance calories</th>
-        <td>
             <tags:stats_line stats="${stats.maintenanceStats}"></tags:stats_line>
-        </td>
+
     </tr>
     <tr>
-        <th scope="row">Estimated cals for weight gain</th>
-        <td>
             <tags:stats_line stats="${stats.weightGainStats}"></tags:stats_line>
-        </td>
+
     </tr>
 
     </tbody>

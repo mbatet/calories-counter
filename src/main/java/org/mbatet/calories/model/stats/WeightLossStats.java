@@ -1,6 +1,6 @@
 package org.mbatet.calories.model.stats;
 
-public class WeightLossStats extends AvgCalStats{
+public class WeightLossStats extends AverageCalStats {
 
 
     public String getTitle(){return "Estimated/recommended cals for weight loss";}
@@ -22,5 +22,7 @@ public class WeightLossStats extends AvgCalStats{
 
         if( value < this.recomendedCals) this.recomendedCals = value;
     }
+
+
 
 }
