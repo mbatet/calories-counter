@@ -82,12 +82,15 @@ public class HomeController {
 
 		List<Dia> dies = weightStatsService.parse(textCsv);
 		List<Interval> intervals = weightStatsService.getIntervals(dies);
+		Interval lastWeek = weightStatsService.getLastWeek(dies);
 		Stats stats = weightStatsService.getStatsFromIntervals(intervals);
+
 
 		//model.addAttribute("missatge", "CSV parsejat");
 		model.addAttribute("dies", dies);
 		model.addAttribute("type", form.getType());
 		model.addAttribute("intervals", intervals);
+		model.addAttribute("lastWeek", lastWeek);
 
 		//fer diferent, un objecte global amb les stats o
 		model.addAttribute("stats", stats);

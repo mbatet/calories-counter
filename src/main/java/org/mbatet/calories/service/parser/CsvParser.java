@@ -36,7 +36,7 @@ public class CsvParser implements Parser {
         try {
 
             dia.setDate(Constants.FORMAT_DATE.parse(fields[0]));
-            if(!"".equals(fields[1])) dia.setPes(Float.parseFloat(fields[1])); //QUe passa si no existeix aquest pes?
+            if(!"".equals(fields[1])) dia.setWeight(Float.parseFloat(fields[1])); //QUe passa si no existeix aquest pes?
             if(!"".equals(fields[2])) dia.setConsumedCals(Integer.parseInt(fields[2]));
             if(!"".equals(fields[3])) dia.setActivityCals(Integer.parseInt(fields[3]));
             if(fields.length>4 ) dia.setObservacions(fields[4]);

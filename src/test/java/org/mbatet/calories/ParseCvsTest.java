@@ -71,8 +71,10 @@ public class ParseCvsTest {
     public  void setUp() throws IOException {
         // Set up database
 
-        System.out.println("LLegim fitxer de dades: "+System.getProperties().getProperty("user.dir")+"\\sample.csv");
-        FileInputStream inputStream = new FileInputStream(System.getProperties().getProperty("user.dir")+"\\sample.csv");
+        String path = System.getProperties().getProperty("user.dir")+System.getProperties().getProperty("path.separator") + "sample.csv";
+
+        System.out.println("Llegim fitxer de dades: "+path);
+        FileInputStream inputStream = new FileInputStream(path);
         try {
             data = IOUtils.toString(inputStream);
         }
@@ -116,13 +118,13 @@ public class ParseCvsTest {
             Assert.assertNotNull(dia);
             Assert.assertNotNull(dia.getLinia());
             //Pot ser que un dia no tinguem algun valor
-            Assert.assertNotNull(dia.getPes()); //no pot ser null perque ens imaginem els valros qu eno tenim
+            Assert.assertNotNull(dia.getWeight()); //no pot ser null perque ens imaginem els valros qu eno tenim
             Assert.assertTrue(dia.getConsumedCals()!=null || dia.getErrorDescription()!=null);
-            Assert.assertNotNull(dia.getPesPonderat());
-            Assert.assertTrue(dia.getPes()>50);
-            Assert.assertTrue(dia.getPes()<60);
-            Assert.assertTrue(dia.getPesPonderat()>50);
-            Assert.assertTrue(dia.getPesPonderat()<60);
+            Assert.assertNotNull(dia.getAdjustedWeight());
+            Assert.assertTrue(dia.getWeight()>50);
+            Assert.assertTrue(dia.getWeight()<60);
+            Assert.assertTrue(dia.getAdjustedWeight()>50);
+            Assert.assertTrue(dia.getAdjustedWeight()<60);
             //System.out.println(dia);
         });
 

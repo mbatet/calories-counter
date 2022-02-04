@@ -11,6 +11,11 @@ import java.util.List;
 public class Interval {
 
 
+
+    static public int TYPE_WEIGHT_GAIN_INTERVAL = 1;
+    static public int TYPE_WEIGHT_LOSS_INTERVAL = -1;
+    static public int TYPE_MAINTENANCE_INTERVAL = 0;
+
     private static final Log log = LogFactory.getLog(Interval.class.getName());
 
     List<Dia> dies = new ArrayList<Dia>();
@@ -76,7 +81,7 @@ public class Interval {
         {
             return null;
         }
-        return this.dies.get(0).getPes();
+        return this.dies.get(0).getWeight();
 
     }
 
@@ -87,27 +92,32 @@ public class Interval {
             return null;
         }
 
-        return this.dies.get(this.dies.size()-1).getPes();
+        return this.dies.get(this.dies.size()-1).getWeight();
     }
 
-    public Float getFirstPesPonderat()
-    {
-        if(this.dies.size()==0)
-        {
-            return null;
-        }
-        return this.dies.get(0).getPesPonderat();
-
-    }
-
-    public Float getLastPesPonderat()
+    public Float getFirstAdjustedWeight()
     {
         if(this.dies.size()==0)
         {
             return null;
         }
 
-        return this.dies.get(this.dies.size()-1).getPesPonderat();
+        float pes = this.dies.get(0).getAdjustedWeight();
+
+        return Utils.round(pes);
+
+    }
+
+    public Float getLastAdjustedWeight()
+    {
+        if(this.dies.size()==0)
+        {
+            return null;
+        }
+
+        float pes = this.dies.get(this.dies.size()-1).getAdjustedWeight();
+
+        return Utils.round(pes);
     }
 
 
@@ -141,7 +151,7 @@ public class Interval {
             return 0F;
         }
 
-        float pes =  this.dies.get(0).getPes();
+        float pes =  this.dies.get(0).getWeight();
 
 
         return Utils.round(pes);
@@ -156,7 +166,7 @@ public class Interval {
             return 0F;
         }
 
-        float pes =   this.dies.get(this.dies.size()-1).getPes();
+        float pes =   this.dies.get(this.dies.size()-1).getWeight();
 
         return Utils.round(pes);
     }
@@ -172,16 +182,12 @@ public class Interval {
         }
 
         //float weightDiff = getLastPes() - getFirstPes();
-        float weightDiff = getLastPesPonderat() - getFirstPesPonderat();
+        float weightDiff = getLastAdjustedWeight() - getFirstAdjustedWeight();
         float rounded = Utils.round(weightDiff);
 
         return rounded;
     }
 
-
-    static public int TYPE_WEIGHT_GAIN_INTERVAL = 1;
-    static public int TYPE_WEIGHT_LOSS_INTERVAL = -1;
-    static public int TYPE_MAINTENANCE_INTERVAL = 0;
 
     public int getType()
     {

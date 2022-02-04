@@ -2,7 +2,6 @@ package org.mbatet.calories.model.stats;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.mbatet.calories.model.Dia;
 import org.mbatet.calories.model.Interval;
 import org.mbatet.calories.service.Utils;
 
@@ -60,26 +59,26 @@ public abstract class AverageCalStats {
         return "activityCals:" + activityCals + " - consumedCals: " + consumedCals + " - adjustedCals: " + adjustedCals;
     }
 
-    public Float getActivityCals() {return Utils.roundToHundreds(activityCals);}
+    public Float getActivityCals() {return Utils.roundToTens(activityCals);}
 
     public void setActivityCals(Float activityCals) {
         this.activityCals = activityCals;
     }
 
-    public Float getAdjustedCals() {return Utils.roundToHundreds(adjustedCals);}
+    public Float getAdjustedCals() {return Utils.roundToTens(adjustedCals);}
 
     public void setAdjustedCals(Float adjustedCals) {
         this.adjustedCals = adjustedCals;
     }
 
 
-    public Float getConsumedCals() {return Utils.roundToHundreds(consumedCals);}
+    public Float getConsumedCals() {return Utils.roundToTens(consumedCals);}
 
     public void setConsumedCals(Float consumedCals) {
         this.consumedCals = consumedCals;
     }
 
-    public Float getRecomendedCals() {return recomendedCals;}
+    public Float getRecomendedCals() {return Utils.roundToTens(recomendedCals);}
 
     public void setRecomendedCals(Float recomendedCals) {this.recomendedCals = recomendedCals;}
 
@@ -128,12 +127,19 @@ public abstract class AverageCalStats {
 
             if( a.isNotEnoughData() || a.getRecomendedCals() < b.getRecomendedCals() )
             {
-                return -1;
+                if(a.getAdjustedCals()< b.getAdjustedCals()) {
+                    return -1;
+                }
+
+                return 0;
             }
 
             if( b.isNotEnoughData() || a.getRecomendedCals() > b.getRecomendedCals() )
             {
-                return 1;
+                if(a.getAdjustedCals()> b.getAdjustedCals()) {
+                    return 1;
+                }
+                return 0;
             }
 
 
