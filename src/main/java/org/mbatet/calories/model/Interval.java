@@ -81,7 +81,7 @@ public class Interval {
         {
             return null;
         }
-        return this.dies.get(0).getPes();
+        return this.dies.get(0).getWeight();
 
     }
 
@@ -92,7 +92,7 @@ public class Interval {
             return null;
         }
 
-        return this.dies.get(this.dies.size()-1).getPes();
+        return this.dies.get(this.dies.size()-1).getWeight();
     }
 
     public Float getFirstAdjustedWeight()
@@ -151,7 +151,7 @@ public class Interval {
             return 0F;
         }
 
-        float pes =  this.dies.get(0).getPes();
+        float pes =  this.dies.get(0).getWeight();
 
 
         return Utils.round(pes);
@@ -166,7 +166,7 @@ public class Interval {
             return 0F;
         }
 
-        float pes =   this.dies.get(this.dies.size()-1).getPes();
+        float pes =   this.dies.get(this.dies.size()-1).getWeight();
 
         return Utils.round(pes);
     }

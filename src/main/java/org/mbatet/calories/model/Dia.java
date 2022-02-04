@@ -11,7 +11,7 @@ public class Dia {
     private static final Log log = LogFactory.getLog(Dia.class.getName());
 
     Date date;
-    Float pes;
+    Float weight;
     Float adjustedWeight;
     Integer consumedCals;
     Integer activityCals;
@@ -28,13 +28,13 @@ public class Dia {
     public Dia(Date date, Float pes, Integer consumedCals)
     {
         this.date = date;
-        this.pes = pes;
+        this.weight = pes;
         this.consumedCals = consumedCals;
     }
 
 
     public String toString(){
-        return "date:"+date +".pes:"   +pes+".calories:" + consumedCals + ".error:"+errorDescription;
+        return "date:"+date +".pes:"   + weight +".calories:" + consumedCals + ".error:"+errorDescription;
     }
 
     public Date getDate() {
@@ -45,12 +45,12 @@ public class Dia {
         this.date = date;
     }
 
-    public Float getPes() {
-        return pes;
+    public Float getWeight() {
+        return weight;
     }
 
-    public void setPes(Float pes) {
-        this.pes = pes;
+    public void setWeight(Float weight) {
+        this.weight = weight;
     }
 
     public Integer getConsumedCals() {return consumedCals;}
@@ -95,7 +95,7 @@ public class Dia {
     {
         //do something
 
-        if(this.pes==null)
+        if(this.weight ==null)
         {
             setErrorDescription("Error parsejant linia: " + linia + " - Ens falta el pes");
         }

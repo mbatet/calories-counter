@@ -10,10 +10,7 @@ import org.mbatet.calories.service.parser.CsvParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 
 @Service
@@ -58,7 +55,7 @@ public class WeightStatsService {
         dies.forEach( (final Dia dia) -> log.debug("[m:parse] dia ordenat:" + dia.getDate()));
 
         afegirDadesQueFalten(dies);
-        calcularPesosPonderats(dies);
+        calculateAdjustedWeights(dies);
 
         log.info("[m:parse] pesos ponderats");
 
@@ -102,10 +99,28 @@ public class WeightStatsService {
         return stats;
     }
 
-    public  Interval getLastWeek(List<Dia> dies)
+    //Els intervals no ens valen perque poden no començar en dilluns
+    public Interval getLastWeek(List<Dia> dies)
     {
+        Interval lastWeek = new Interval();
+        //agafem un altre objecte per no revertir el objecte orgininal, no sigui que el necessitem
+        List<Dia> diesReversed = new ArrayList<Dia>();
+        diesReversed.addAll(dies);
+        Collections.reverse(diesReversed);
 
-        return null;
+        for(Dia dia: diesReversed)
+        {
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(dia.getDate());
+            lastWeek.addDia(dia);
+            if(cal.get(Calendar.DAY_OF_WEEK) == Calendar.MONDAY)
+            {
+                break;
+            }
+
+        }
+
+        return lastWeek;
     }
 
     public  List<Interval> getIntervals(List<Dia> dies)
@@ -175,9 +190,9 @@ public class WeightStatsService {
         int apuntador = 0;
         for(Dia dia: dies)
         {
-            if(dia.getPes()==null)
+            if(dia.getWeight()==null)
             {
-                dia.setPes( (dies.get(apuntador-1).getPes() + dies.get(apuntador+1).getPes())/2f);
+                dia.setWeight( (dies.get(apuntador-1).getWeight() + dies.get(apuntador+1).getWeight())/2f);
             }
             apuntador++;
         }
@@ -185,13 +200,13 @@ public class WeightStatsService {
     }
 
 
-    private void calcularPesosPonderats(List<Dia> dies)  {
+    private void calculateAdjustedWeights(List<Dia> dies)  {
 
         Float[] array = new Float[dies.size()];
 
         int i =0;
         for(Dia dia:dies){
-            array[i++]=dia.getPes();
+            array[i++]=dia.getWeight();
         }
 
 

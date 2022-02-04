@@ -42,7 +42,7 @@ const d = new Date("2015-03-25");
                     dataPoints: [
                         <c:forEach items="${dies}" var="dia"  varStatus="loop">
                             <c:if test="${type==Constants.WHEIGHT_TRACKING_CHART}">
-                                {x: new Date(${dia.date.year+1900}, ${dia.date.month}, ${dia.date.date}), y: ${Utils.round(dia.pes)}}
+                                {x: new Date(${dia.date.year+1900}, ${dia.date.month}, ${dia.date.date}), y: ${Utils.round(dia.weight)}}
                             </c:if>
                             <c:if test="${type==Constants.WHEIGHT_TRACKING_CHART_PONDERAT}">
                                 {x: new Date(${dia.date.year+1900}, ${dia.date.month}, ${dia.date.date}), y: ${Utils.round(dia.adjustedWeight)}}

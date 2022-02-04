@@ -118,11 +118,11 @@ public class ParseCvsTest {
             Assert.assertNotNull(dia);
             Assert.assertNotNull(dia.getLinia());
             //Pot ser que un dia no tinguem algun valor
-            Assert.assertNotNull(dia.getPes()); //no pot ser null perque ens imaginem els valros qu eno tenim
+            Assert.assertNotNull(dia.getWeight()); //no pot ser null perque ens imaginem els valros qu eno tenim
             Assert.assertTrue(dia.getConsumedCals()!=null || dia.getErrorDescription()!=null);
             Assert.assertNotNull(dia.getAdjustedWeight());
-            Assert.assertTrue(dia.getPes()>50);
-            Assert.assertTrue(dia.getPes()<60);
+            Assert.assertTrue(dia.getWeight()>50);
+            Assert.assertTrue(dia.getWeight()<60);
             Assert.assertTrue(dia.getAdjustedWeight()>50);
             Assert.assertTrue(dia.getAdjustedWeight()<60);
             //System.out.println(dia);

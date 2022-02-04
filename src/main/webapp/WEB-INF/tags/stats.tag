@@ -21,11 +21,7 @@ return "dies:" + dies.size() + ".first:"+getFirstDate() + ".last:"+getLastDate()
     </thead>
     <tbody>
     <tr>
-
             <tags:stats_line stats="${stats.weightLossStats}"></tags:stats_line>
-
-
-
     </tr>
     <tr>
             <tags:stats_line stats="${stats.maintenanceStats}"></tags:stats_line>
@@ -33,7 +29,9 @@ return "dies:" + dies.size() + ".first:"+getFirstDate() + ".last:"+getLastDate()
     </tr>
     <tr>
             <tags:stats_line stats="${stats.weightGainStats}"></tags:stats_line>
-
+    </tr>
+    <tr>
+        <tags:lastWeek interval="${lastWeek}"></tags:lastWeek>
     </tr>
 
     </tbody>
