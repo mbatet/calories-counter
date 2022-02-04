@@ -29,18 +29,20 @@ return "dies:" + dies.size() + ".first:"+getFirstDate() + ".last:"+getLastDate()
         <th scope="col" width="10%">Avg consumed cals</th>
         <th scope="col" width="10%">Avg activity cals</th>
         <th scope="col" width="10%">Consumed - expended</th>
-        <th scope="col" width="15%">Weight</th>
+        <th scope="col" width="15%">Adjusted weight (*)</th>
         <th scope="col" width="15%">Adjusted weight variation (*)</th>
     </tr>
     </thead>
     <tbody>
 
     <c:forEach items="${intervals}" var="interval"  varStatus="loop">
+
+            <c:set var="trClass" value="${interval.type==Interval.TYPE_WEIGHT_LOSS_INTERVAL?'table-success': (interval.type==Interval.TYPE_WEIGHT_GAIN_INTERVAL?'table-danger':'table-warning')  }"/>
             <c:if test="${!loop.last}">
-                <tr>
+                <tr class="${trClass}">
                     <th scope="row">
                         <c:if test="${interval.dies.size()==7}">Week ${loop.index+1}</c:if>
-                        <c:if test="${interval.dies.size()!=7}">Last days...</c:if>
+                        <c:if test="${interval.dies.size()!=7}">Last ${interval.dies.size()} days</c:if>
 
                     </th>
                     <td>${interval.dies.size()}</td>
@@ -49,12 +51,15 @@ return "dies:" + dies.size() + ".first:"+getFirstDate() + ".last:"+getLastDate()
                     <td>${Math.round(interval.avgConsumedCals)} cals</td>
                     <td>${Math.round(interval.avgActivityCals)} cals</td>
                     <td>${Math.round(interval.avgAdjustedCals)} cals</td>
+                    <%--
                     <td>From ${interval.firstWeight} to ${interval.lastWeight} Kg</td>
+                    --%>
+                    <td>From ${interval.firstAdjustedWeight} to ${interval.lastAdjustedWeight} Kg</td>
                     <td>${interval.weigthDiff} Kg</td>
                 </tr>
             </c:if>
             <c:if test="${loop.last}">
-                <tr class="table-primary">
+                <tr class="${trClass}">
                     <th scope="row">Total</th>
                     <th scope="row">${interval.dies.size()}</th>
                     <td><fmt:formatDate value="${interval.firstDate}" pattern="EEE dd/MM/yy"/></td>

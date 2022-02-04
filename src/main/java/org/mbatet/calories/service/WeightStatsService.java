@@ -102,6 +102,11 @@ public class WeightStatsService {
         return stats;
     }
 
+    public  Interval getLastWeek(List<Dia> dies)
+    {
+
+        return null;
+    }
 
     public  List<Interval> getIntervals(List<Dia> dies)
     {
@@ -218,7 +223,7 @@ public class WeightStatsService {
             log.debug("i:" + i + " - first:" + first + " - last:" + last + " - pesPonderat =" + sumaPesos  + "/" + numPesos + " - pesPonderat: " + pesPonderat);
 
 
-            dia.setPesPonderat(pesPonderat);
+            dia.setAdjustedWeight(pesPonderat);
 
             i++;
 

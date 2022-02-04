@@ -1,5 +1,7 @@
 package org.mbatet.calories.model.stats;
 
+import java.util.Comparator;
+
 public class Stats {
 
     /**
@@ -44,12 +46,19 @@ public class Stats {
 
 
         //necessitem mes dades
-        if(weightLossStats.getRecomendedCals()!=null && weightLossStats.getRecomendedCals()>maintenanceStats.getRecomendedCals())
+
+        //TODO: HEM DE FER SERVIR EL COMPARATOR!!!
+        Comparator comp = new AverageCalStats.SortStats();
+
+
+        //if(weightLossStats.getRecomendedCals()!=null && weightLossStats.getRecomendedCals()>maintenanceStats.getRecomendedCals())
+        if( comp.compare(weightLossStats, maintenanceStats) > 0 || comp.compare(maintenanceStats, weightGainStats) > 0)
         {
             maintenanceStats.setNotEnoughData(true);
         }
 
-        if(weightGainStats.getRecomendedCals()!=null && weightGainStats.getRecomendedCals()<maintenanceStats.getRecomendedCals())
+        //if(weightGainStats.getRecomendedCals()!=null && weightGainStats.getRecomendedCals()<maintenanceStats.getRecomendedCals())
+        if( comp.compare(weightGainStats, maintenanceStats) < 1 || comp.compare(weightGainStats, weightLossStats) < 1)
         {
             weightGainStats.setNotEnoughData(true);
         }

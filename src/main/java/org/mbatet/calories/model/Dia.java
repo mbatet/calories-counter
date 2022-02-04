@@ -12,7 +12,7 @@ public class Dia {
 
     Date date;
     Float pes;
-    Float pesPonderat;
+    Float adjustedWeight;
     Integer consumedCals;
     Integer activityCals;
 
@@ -83,9 +83,9 @@ public class Dia {
         this.errorDescription = errorDescription;
     }
 
-    public Float getPesPonderat() {return pesPonderat;}
+    public Float getAdjustedWeight() {return adjustedWeight;}
 
-    public void setPesPonderat(Float pesPonderat) {this.pesPonderat = pesPonderat;}
+    public void setAdjustedWeight(Float adjustedWeight) {this.adjustedWeight = adjustedWeight;}
 
     public Integer getActivityCals() {return activityCals;}
 

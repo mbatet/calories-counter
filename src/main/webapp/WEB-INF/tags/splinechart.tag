@@ -45,7 +45,7 @@ const d = new Date("2015-03-25");
                                 {x: new Date(${dia.date.year+1900}, ${dia.date.month}, ${dia.date.date}), y: ${Utils.round(dia.pes)}}
                             </c:if>
                             <c:if test="${type==Constants.WHEIGHT_TRACKING_CHART_PONDERAT}">
-                                {x: new Date(${dia.date.year+1900}, ${dia.date.month}, ${dia.date.date}), y: ${Utils.round(dia.pesPonderat)}}
+                                {x: new Date(${dia.date.year+1900}, ${dia.date.month}, ${dia.date.date}), y: ${Utils.round(dia.adjustedWeight)}}
                             </c:if>
                             <c:if test="${!loop.last}">,</c:if>
                         </c:forEach>
