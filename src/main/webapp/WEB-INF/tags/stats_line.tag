@@ -12,7 +12,7 @@
     <c:if test="${stats.notEnoughData}">N/A (more data needed)</c:if>
     <c:if test="${!stats.notEnoughData}">
         <b>${Math.round(stats.recomendedCals)}</b>
-        (with an avrg of ${Math.round(stats.activityCals)}  consumed in activity)
+        (with an avg of ${Math.round(stats.activityCals)}  consumed in activity)
         or <b>${Math.round(stats.adjustedCals)}</b> without
     </c:if>
 
