@@ -18,14 +18,17 @@ public class Constants {
     public final static float MIN_AMMOUNT_WE_CONSIDER_IS_LOSING_WEIGHT = 0.15f;
 
 
-    public final static String WHEIGHT_TRACKING_CHART = "WHEIGHT_TRACKING_CHART";
-    public final static String WHEIGHT_TRACKING_CHART_PONDERAT = "WHEIGHT_TRACKING_CHART_PONDERAT";
+    public final static String WHEIGHT_TRACKING_CHART_RAW_WEIGHTS = "WHEIGHT_TRACKING_CHART_RAW_WEIGHTS";
+    public final static String WHEIGHT_TRACKING_CHART_ADJUSTED_WEIGHTS = "WHEIGHT_TRACKING_CHART_ADJUSTED_WEIGHTS";
+    public final static String WHEIGHT_TRACKING_CHART_TWO_SERIES_RAW_AND_ADJUSTED = "WHEIGHT_TRACKING_CHART_TWO_SERIES_RAW_AND_ADJUSTED";
+
     //AFEGIR UN GRAFIC DE CALORIES COSNUMIDES
 
     public static Map<String, String> CHART_TITTLE =
             new HashMap<String, String>() {{
-                put(WHEIGHT_TRACKING_CHART, "Weight tracking chart (raw data)");
-                put(WHEIGHT_TRACKING_CHART_PONDERAT, "Weight tracking chart (adjusted data)");
+                put(WHEIGHT_TRACKING_CHART_RAW_WEIGHTS, "Weight tracking chart (raw data)");
+                put(WHEIGHT_TRACKING_CHART_ADJUSTED_WEIGHTS, "Weight tracking chart (adjusted weight)");
+                put(WHEIGHT_TRACKING_CHART_TWO_SERIES_RAW_AND_ADJUSTED, "Weight tracking chart (raw vs. adjusted weights)");
 
             }};
 
