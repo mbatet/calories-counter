@@ -1,3 +1,3 @@
 <br/>
-<div><a href="/calories/index">Inici</a></div>
+<div><a href="/calories-counter/index">Back to index</a></div>
 
