@@ -28,7 +28,7 @@ public class Constants {
             new HashMap<String, String>() {{
                 put(WHEIGHT_TRACKING_CHART_RAW_WEIGHTS, "Weight tracking chart (raw data)");
                 put(WHEIGHT_TRACKING_CHART_ADJUSTED_WEIGHTS, "Weight tracking chart (adjusted weight)");
-                put(WHEIGHT_TRACKING_CHART_TWO_SERIES_RAW_AND_ADJUSTED, "Weight tracking chart (raw and adjusted weights)");
+                put(WHEIGHT_TRACKING_CHART_TWO_SERIES_RAW_AND_ADJUSTED, "Weight tracking chart (raw vs. adjusted weights)");
 
             }};
 
