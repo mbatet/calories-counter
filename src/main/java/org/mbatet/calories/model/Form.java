@@ -31,7 +31,7 @@ public class Form {
      * 2: Selects amb comentaris
      * 3: Selects sense comentaris
      * */
-    String type = Constants.WHEIGHT_TRACKING_CHART;
+    String type = Constants.WHEIGHT_TRACKING_CHART_RAW_WEIGHTS;
 
     public Form(){
 

@@ -30,7 +30,12 @@
             </c:if>
             <c:if test="${!hasErrors}">
 
+
                 <tags:splinechart titleX="${title}" titleY="Pes" dies="${dies}" type="${type}"></tags:splinechart>
+
+                <%--
+                <tags:multiSeriesChart titleX="${title}" titleY="Pes" dies="${dies}" type="${type}"></tags:multiSeriesChart>
+                --%>
 
                 <tags:intervals intervals="${intervals}"></tags:intervals>
                 <tags:stats stats="${stats}"></tags:stats>
