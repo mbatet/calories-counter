@@ -29,11 +29,10 @@
 
             </c:if>
             <c:if test="${!hasErrors}">
-
                 <c:if test="${type==Constants.WHEIGHT_TRACKING_CHART_TWO_SERIES_RAW_AND_ADJUSTED}">
                     <tags:multiSeriesChart titleX="${title}" titleY="Pes" dies="${dies}" type="${type}"></tags:multiSeriesChart>
                 </c:if>
-                <c:if test="${type==Constants.WHEIGHT_TRACKING_CHART_RAW_WEIGHTS || type==WHEIGHT_TRACKING_CHART_ADJUSTED_WEIGHTS}">
+                <c:if test="${type==Constants.WHEIGHT_TRACKING_CHART_ADJUSTED_WEIGHTS || type==Constants.WHEIGHT_TRACKING_CHART_RAW_WEIGHTS}">
                     <tags:splinechart titleX="${title}" titleY="Pes" dies="${dies}" type="${type}"></tags:splinechart>
                 </c:if>
 
