@@ -52,5 +52,4 @@ const d = new Date("2015-03-25");
     }
 </script>
 
-
 <div id="chartContainer" style="width: 100%; height: 312px"></div>
