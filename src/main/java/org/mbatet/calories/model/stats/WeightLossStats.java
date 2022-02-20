@@ -12,7 +12,7 @@ public class WeightLossStats extends AverageCalStats {
         return "[WeightLossStats]activityCals:" + activityCals + " - consumedCals: " + consumedCals + " - adjustedCals: " + adjustedCals;
     }
 
-
+/*
     public void changeRecomendedCalsIfSmaller(Float value) {
 
         if(value==null || this.recomendedCals==null)
@@ -22,7 +22,7 @@ public class WeightLossStats extends AverageCalStats {
 
         if( value < this.recomendedCals) this.recomendedCals = value;
     }
-
+*/
 
 
 }

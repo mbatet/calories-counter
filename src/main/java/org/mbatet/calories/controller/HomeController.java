@@ -71,7 +71,7 @@ public class HomeController {
 		if( form.isEmpty() )
 		{
 			log.error("[m:parse] No s'ha trobat fitxer ni text a parsejar...");
-			model.addAttribute("missatge", "No s'ha trobat res a parsejar");
+			model.addAttribute("message", "No s'ha trobat res a parsejar");
 			return "index";
 
 		}
@@ -86,7 +86,7 @@ public class HomeController {
 		Stats stats = weightStatsService.getStatsFromIntervals(intervals);
 
 
-		//model.addAttribute("missatge", "CSV parsejat");
+		//model.addAttribute("message", "CSV parsejat");
 		model.addAttribute("dies", dies);
 		model.addAttribute("type", form.getType());
 		model.addAttribute("intervals", intervals);
@@ -100,10 +100,11 @@ public class HomeController {
 
 		if( intervals.size() > 0 ) {
 
-			Interval firstInterval = intervals.get(0);
-			title += " " + Constants.FORMAT_DATE.format(firstInterval.getFirstDate()) + " to " + Constants.FORMAT_DATE.format(firstInterval.getLastDate());
-			intervals.remove(firstInterval);
-			intervals.add(firstInterval);
+			//TODO: Aquest interval hauria d'anar al model de forma separada
+			Interval intervalGeneral = intervals.get(0);
+			title += " " + Constants.FORMAT_DATE.format(intervalGeneral.getFirstDate()) + " to " + Constants.FORMAT_DATE.format(intervalGeneral.getLastDate());
+			intervals.remove(intervalGeneral);
+			intervals.add(intervalGeneral);
 		}
 
 
@@ -116,20 +117,11 @@ public class HomeController {
 	}
 
 
-	@RequestMapping(value={"/error"}, method = RequestMethod.GET)
-	public String anotherAction(Model model, HttpServletRequest request){
-
-		log.info("[m:anotherAction] Entrem al controlador...");
-		return "error";
-
-	}
-
-
 	@ExceptionHandler(Exception.class)
 	public String handleException (Model model, HttpServletRequest request, HttpServletResponse response, Exception e) {
 
 		log.error("[m:handleException] Exception found: " + e.getMessage());
-		model.addAttribute("missatge",e.getMessage());
+		model.addAttribute("message",e.getMessage());
 		return "error";
 	}
 

@@ -71,26 +71,8 @@ public class WeightStatsService {
 
         Stats stats = new Stats();
 
-        for(Interval interval: intervals)
-        {
-
-            if( interval.getType() == Interval.TYPE_WEIGHT_LOSS_INTERVAL )
-            {
-                stats.getWeightLossStats().addInterval(interval);
-
-            }
-            else if( interval.getType() == Interval.TYPE_WEIGHT_GAIN_INTERVAL )
-            {
-                stats.getWeightGainStats().addInterval(interval);
-
-            }
-            else //if(  interval.getType() == Interval.TYPE_MAINTENANCE_INTERVAL )
-            {
-                //ens hem mantingut
-                stats.getMaintenanceStats().addInterval(interval);
-            }
-          
-
+        for(Interval interval: intervals){
+            stats.addInterval(interval);
         }
 
         stats.calculate();
