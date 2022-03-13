@@ -94,6 +94,7 @@ public class WeightStatsService {
         {
             Calendar cal = Calendar.getInstance();
             cal.setTime(dia.getDate());
+
             lastWeek.addDia(dia);
             if(cal.get(Calendar.DAY_OF_WEEK) == Calendar.MONDAY)
             {
@@ -102,6 +103,7 @@ public class WeightStatsService {
 
         }
 
+        Collections.reverse(lastWeek.getDies());
         return lastWeek;
     }
 
@@ -225,6 +227,71 @@ public class WeightStatsService {
             i++;
 
         }
+    }
+
+
+    public Float getCalsLeft(Interval lastWeek, WeightLossStats weightLossStats){
+
+        Float recommendedCals = weightLossStats.getRecomendedCals();
+
+        log.info("[m:getCalsLeft]  weightLossStats.getRecomendedCals: " + recommendedCals);
+
+        if(lastWeek.getDies().size()==0)
+        {
+            log.info("[m:getCalsLeft] Last week no te dies. Retornem weightLossStats.getRecomendedCals: " + recommendedCals);
+            return recommendedCals;
+        }
+
+        if(lastWeek.getDies().size()>=7)
+        {
+            log.info("[m:getCalsLeft] Last week te " + lastWeek.getDies().size() + " dies. Retornem 0");
+            return 0F;
+        }
+
+        log.info("[m:getCalsLeft] Last week te " + lastWeek.getDies().size() + " dies. Calculem...");
+
+        int sumaCals=0;
+        int diesTotals=0;
+        for(Dia dia:lastWeek.getDies()){
+            //perque podria ser que algun dia no tingeussim dades
+            log.info("[m:getCalsLeft] dia.getConsumedCals: " + dia.getConsumedCals());
+            if(dia.getConsumedCals()!=null) {
+                sumaCals += dia.getConsumedCals();
+                diesTotals++;
+            }
+        }
+
+        log.info("[m:getCalsLeft] sumaCals: " + sumaCals + " - diesTotals: " + diesTotals);
+
+        //per si de cas tinguessim deis "buits" pero que ja han passat, no pendents de passar (no podem canviar els dies que ja han passat i no sabem que vam menjar)
+        while( diesTotals < lastWeek.getDies().size() )
+        {
+            sumaCals += lastWeek.getAvgConsumedCals();
+            diesTotals++;
+        }
+
+        log.info("[m:getCalsLeft] (despres de omplir els dies buits) sumaCals: " + sumaCals + " - diesTotals: " + diesTotals);
+
+
+
+        Float calsLeft =  recommendedCals * 7 - sumaCals;
+        log.info("[m:getCalsLeft] calsLeft: " + calsLeft);
+
+        int daysLeft = 7 - diesTotals;
+        log.info("[m:getCalsLeft] daysLeft: " + daysLeft);
+
+        Float calsForDay = calsLeft/daysLeft;
+        log.info("[m:getCalsLeft] calsLeft/daysLeft: " + calsForDay);
+
+        if(calsLeft<0)
+        {
+
+            log.info("[m:getCalsLeft] Ens queden calories negatives... Retornem 0");
+            return 0F;
+        }
+
+        return calsForDay;
+
     }
 
 }

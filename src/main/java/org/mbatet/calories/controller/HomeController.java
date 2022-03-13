@@ -3,6 +3,7 @@ package org.mbatet.calories.controller;
 
 import org.mbatet.calories.model.*;
 import org.mbatet.calories.model.stats.Stats;
+import org.mbatet.calories.model.stats.WeightLossStats;
 import org.mbatet.calories.service.WeightStatsService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -85,12 +86,17 @@ public class HomeController {
 		Interval lastWeek = weightStatsService.getLastWeek(dies);
 		Stats stats = weightStatsService.getStatsFromIntervals(intervals);
 
+		//TODO: Posar a dins de stats i clacular a dins de getStatsFromIntervals
+		Float calsLeft = weightStatsService.getCalsLeft( lastWeek, stats.getWeightLossStats());
+
 
 		//model.addAttribute("message", "CSV parsejat");
 		model.addAttribute("dies", dies);
 		model.addAttribute("type", form.getType());
 		model.addAttribute("intervals", intervals);
 		model.addAttribute("lastWeek", lastWeek);
+		model.addAttribute("calsLeft", calsLeft);
+
 
 		//fer diferent, un objecte global amb les stats o
 		model.addAttribute("stats", stats);
