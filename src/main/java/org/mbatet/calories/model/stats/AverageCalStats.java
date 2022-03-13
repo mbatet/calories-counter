@@ -19,6 +19,8 @@ public abstract class AverageCalStats {
     Float activityCals = 0F;
     Float adjustedCals = 0F;
     Float consumedCals = 0F;
+
+    //Es igual que a consumedCals pero pot ser null, cosa que consumedCals semrpe hot enim, com a mínim, a 0
     Float recomendedCals;
 
     boolean notEnoughData = false;
@@ -106,6 +108,8 @@ public abstract class AverageCalStats {
         this.activityCals = this.activityCals/(float)intervals.size();
         this.adjustedCals = this.adjustedCals/(float)intervals.size();
 
+        //TODO: Hauria de ser ponderat, no una mitja de les calories consumides, exactament si o que al calcul hauria de tenri mes pes
+        //els intervals en que el guany de pes es menor o major!
         this.recomendedCals =  this.consumedCals;
 
     }
@@ -123,25 +127,43 @@ public abstract class AverageCalStats {
         @Override
         public int compare(AverageCalStats a, AverageCalStats b) {
 
+            //log.info("[m:compare] Comparem " + a.getRecomendedCals() + " (" + a.getAdjustedCals() + ") amb " + b.getRecomendedCals() + " (" + b.getAdjustedCals() + ")");
 
-
+            //  if( comp.compare(weightLossStats, maintenanceStats) > 0
+            //recomendedCals == consumedCals
             if( a.isNotEnoughData() || a.getRecomendedCals() < b.getRecomendedCals() )
             {
-                if(a.getAdjustedCals()< b.getAdjustedCals()) {
+                /*
+                if(a.getAdjustedCals() < b.getAdjustedCals()) {
+
+                    log.info("[m:compare] Retornem -1 (a és menor que b) ===> " + a.getRecomendedCals()  + " < " + b.getRecomendedCals() + " (i " + a.getAdjustedCals()  + "<" + b.getAdjustedCals() + ")");
                     return -1;
                 }
 
+                log.info("[m:compare] Retornem 0 (a és igual que b) ===> " + a.getRecomendedCals()  + " < " + b.getRecomendedCals() + " (i " + a.getAdjustedCals()  + " > " +  b.getAdjustedCals() + ")");
                 return 0;
+                */
+
+                log.info("[m:compare] Retornem -1 (a és menor que b) ===> " + a.getRecomendedCals()  + " < " + b.getRecomendedCals());
+                return -1;
             }
 
             if( b.isNotEnoughData() || a.getRecomendedCals() > b.getRecomendedCals() )
             {
+                /*
                 if(a.getAdjustedCals()> b.getAdjustedCals()) {
+                    log.info("[m:compare] Retornem 1 (a és més gran que b)===> " + a.getRecomendedCals()  + " > " + b.getRecomendedCals() + " (i " + a.getAdjustedCals()  + " > " +  b.getAdjustedCals() + ")");
                     return 1;
                 }
-                return 0;
+                log.info("[m:compare] Retornem 0 (a es igual que b) ===> " + a.getRecomendedCals()  + " > " + b.getRecomendedCals() + " (i " + a.getAdjustedCals()  + " < " +  b.getAdjustedCals() + ")");
+                return 0;*/
+
+                log.info("[m:compare] Retornem 1 (a és més gran que b) ===> " + a.getRecomendedCals()  + " > " + b.getRecomendedCals());
+                return 1;
             }
 
+
+            log.info("[m:compare] Retornem 1 (son iguals) ===> " + a.getRecomendedCals()  + " = " + b.getRecomendedCals());
 
             return 0;
 

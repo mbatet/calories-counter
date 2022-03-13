@@ -13,6 +13,7 @@ public class WeightGainStats extends AverageCalStats {
     }
 
 
+    /*
     public void changeRecomendedCalsIfBigger(Float value) {
 
         if(value==null || this.recomendedCals==null)
@@ -21,5 +22,5 @@ public class WeightGainStats extends AverageCalStats {
         }
 
         if( value >this.recomendedCals) this.recomendedCals = value;
-    }
+    }*/
 }

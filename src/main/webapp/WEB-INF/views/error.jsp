@@ -8,7 +8,7 @@
         <div class="container">
             <h1>Ooops.... something has gone wrong</h1>
             <hr/>
-            Missatge: ${missatge}
+                <tags:message/>
             <hr/>
             <%@include file="shared/inici_link.jsp" %>
         </div>

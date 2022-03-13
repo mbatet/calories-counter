@@ -1,5 +1,9 @@
 package org.mbatet.calories.model.stats;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.mbatet.calories.model.Interval;
+
 import java.util.Comparator;
 
 public class Stats {
@@ -12,6 +16,7 @@ public class Stats {
     MaintenanceStats maintenanceStats = new MaintenanceStats();
     WeightLossStats weightLossStats = new WeightLossStats();
 
+    private static final Log log = LogFactory.getLog(Stats.class.getName());
 
 
     public WeightGainStats getWeightGainStats() {
@@ -38,6 +43,27 @@ public class Stats {
         this.weightLossStats = weightLossStats;
     }
 
+    public void addInterval(Interval interval)
+    {
+        if( interval.getType() == Interval.TYPE_WEIGHT_LOSS_INTERVAL )
+        {
+            this.weightLossStats.addInterval(interval);
+            return;
+        }
+
+        if( interval.getType() == Interval.TYPE_WEIGHT_GAIN_INTERVAL )
+        {
+            this.weightGainStats.addInterval(interval);
+            return;
+        }
+
+        //if(  interval.getType() == Interval.TYPE_MAINTENANCE_INTERVAL )
+
+        //ens hem mantingut
+        this.maintenanceStats.addInterval(interval);
+
+    }
+
     public void calculate()
     {
         weightLossStats.calculate();
@@ -51,17 +77,25 @@ public class Stats {
         Comparator comp = new AverageCalStats.SortStats();
 
 
-        //if(weightLossStats.getRecomendedCals()!=null && weightLossStats.getRecomendedCals()>maintenanceStats.getRecomendedCals())
-        if( comp.compare(weightLossStats, maintenanceStats) > 0 || comp.compare(maintenanceStats, weightGainStats) > 0)
-        {
-            maintenanceStats.setNotEnoughData(true);
-        }
-
+        log.info("[m:calculate] Comparem weightGainStats amb maintenanceStats i weightLossStats");
         //if(weightGainStats.getRecomendedCals()!=null && weightGainStats.getRecomendedCals()<maintenanceStats.getRecomendedCals())
         if( comp.compare(weightGainStats, maintenanceStats) < 1 || comp.compare(weightGainStats, weightLossStats) < 1)
         {
+
+            log.info("[m:calculate] No tenim prou dades per tenir estadistiques de weightGainStats" );
             weightGainStats.setNotEnoughData(true);
         }
+
+        log.info("[m:calculate] Comparem weightLossStats amb maintenanceStats i weightGainStats");
+        //if(weightLossStats.getRecomendedCals()!=null && weightLossStats.getRecomendedCals()>maintenanceStats.getRecomendedCals())
+        if( comp.compare(weightLossStats, maintenanceStats) >= 0 || comp.compare(weightLossStats, weightGainStats) >= 0)
+        {
+
+            log.info("[m:calculate] No tenim prou dades per tenir estadistiques de weightLossStats" );
+            weightLossStats.setNotEnoughData(true);
+        }
+
+
     }
 
 

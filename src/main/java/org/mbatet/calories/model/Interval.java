@@ -209,6 +209,7 @@ public class Interval {
 
     }
 
+    //TODO: FER TEST PER ASSEGURAR QUE EL AVG DESCOMPTA BE ELS DIES NULLS
     public float getAvgConsumedCals()
     {
 
@@ -222,12 +223,16 @@ public class Interval {
 
         for(Dia dia:dies){
             //perque podria ser que algun dia no tingeussim dades
+            log.info("[m:getAvgConsumedCals] dia.getConsumedCals: " + dia.getConsumedCals());
             if(dia.getConsumedCals()!=null) {
                 sumaCals += dia.getConsumedCals();
                 diesTotals++;
             }
+
+            //log.info("[m:getAvgConsumedCals][" + diesTotals + "] sumaCals: " + sumaCals);
         }
 
+        log.info("[m:getAvgConsumedCals] diesTotals: " + diesTotals);
         return sumaCals/diesTotals;
 
     }

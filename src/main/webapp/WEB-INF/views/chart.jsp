@@ -13,11 +13,7 @@
 
             <h1>${title}</h1>
 
-
-
-            <div class="alert alert-primary" role="alert">
-                ${missatge}
-            </div>
+          <tags:message/>
 
             <c:if test="${hasErrors}">
                 <%--

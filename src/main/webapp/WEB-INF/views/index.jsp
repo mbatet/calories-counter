@@ -14,7 +14,8 @@
         <div class="container">
 
             <h1>Load a CSV file or copy&paste a CSV formatted text</h1>
-            ${missatge}<br/>
+            <tags:message/>
+            <br/>
 
 
             <%@include file="shared/format.jsp" %>
