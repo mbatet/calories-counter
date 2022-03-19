@@ -6,8 +6,8 @@ import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.mbatet.calories.model.*;
-import org.mbatet.calories.model.stats.AverageCalStats;
-import org.mbatet.calories.model.stats.Stats;
+import org.mbatet.calories.model.stats.WeightStats;
+import org.mbatet.calories.model.stats.TrackingChart;
 import org.mbatet.calories.service.WeightStatsService;
 import org.mbatet.calories.service.parser.CsvParser;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +36,7 @@ public class ParseCvsTest {
     String data = null;
     List<Dia> dies = null;
     List<Interval> intervals = null;
-    Stats stats = null;
+    TrackingChart stats = null;
 
 
     @BeforeAll
@@ -143,7 +143,7 @@ public class ParseCvsTest {
     @Order(3)
     public void testGetStats () throws IOException {
 
-        Comparator comp = new AverageCalStats.SortStats();
+        Comparator comp = new WeightStats.SortStats();
 
         stats = weightStatsService.getStatsFromIntervals(intervals);
         Assert.assertNotNull(stats);
@@ -165,7 +165,7 @@ public class ParseCvsTest {
 
     }
 
-    public void testStats (AverageCalStats avgCalStats) throws IOException {
+    public void testStats (WeightStats avgCalStats) throws IOException {
 
         Assert.assertNotNull(avgCalStats.getConsumedCals());
         Assert.assertNotNull(avgCalStats.getActivityCals());

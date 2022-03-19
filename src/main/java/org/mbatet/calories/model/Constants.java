@@ -14,7 +14,7 @@ public class Constants {
     public final static int DEFAULT_MIDA_INTERVAL = 7;
     public final static int MIN_MIDA_INTERVAL = 4;
 
-    //TODO: HA DE SER CONFIGURABLE
+    //TODO: It should be configurable
     public final static float MIN_AMMOUNT_WE_CONSIDER_IS_LOSING_WEIGHT = 0.15f;
 
 

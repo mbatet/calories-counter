@@ -70,11 +70,11 @@ public class WeightStatsService {
     }
 
 
-    public Stats getStatsFromIntervals( List<Interval> intervals)
+    public TrackingChart getStatsFromIntervals(List<Interval> intervals)
     {
 
 
-        Stats stats = new Stats();
+        TrackingChart stats = new TrackingChart();
 
         for(Interval interval: intervals){
             stats.addInterval(interval);
@@ -168,9 +168,8 @@ public class WeightStatsService {
 
     private void afegirDadesQueFalten(List<Dia> dies)  {
 
-        //TODO: Que fem amb els dates que falten... haurien de posar els dies ni que estiguin buits...
-
-        //TODO: MIrar tb que no hi hagin dades repetides!!
+        //TODO: what do we do when days are missing? we should insert the dates even if there are void of data...
+        //TODO:guarantee there are not duplicate date
 
         //Pel moment, omplim els pesos que no tinguem, que es elq ue mes necessitem, sense la resta podem passar
 
@@ -213,7 +212,7 @@ public class WeightStatsService {
             int numPesos = 0;
             for(int apuntador=first; apuntador<=last; apuntador++)
             {
-                //TODO: Que fem quan el pes es nul??
+                //TODO: what do we do if weigh is empty?
                 if(array[apuntador]!=null) {
                     sumaPesos += array[apuntador];
                     numPesos++; //ho fem aixi perque podriem tenir algun pes a null

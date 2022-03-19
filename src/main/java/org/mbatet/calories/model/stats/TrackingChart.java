@@ -6,17 +6,17 @@ import org.mbatet.calories.model.Interval;
 
 import java.util.Comparator;
 
-public class Stats {
+public class TrackingChart {
 
     /**
      * Només es una classe enbollcall per passar objecets a la vista
      * */
 
     WeightGainStats weightGainStats = new WeightGainStats();
-    MaintenanceStats maintenanceStats = new MaintenanceStats();
+    WeightMaintenanceStats maintenanceStats = new WeightMaintenanceStats();
     WeightLossStats weightLossStats = new WeightLossStats();
 
-    private static final Log log = LogFactory.getLog(Stats.class.getName());
+    private static final Log log = LogFactory.getLog(TrackingChart.class.getName());
 
 
     public WeightGainStats getWeightGainStats() {
@@ -27,11 +27,11 @@ public class Stats {
         this.weightGainStats = weightGainStats;
     }
 
-    public MaintenanceStats getMaintenanceStats() {
+    public WeightMaintenanceStats getMaintenanceStats() {
         return maintenanceStats;
     }
 
-    public void setMaintenanceStats(MaintenanceStats maintenanceStats) {
+    public void setMaintenanceStats(WeightMaintenanceStats maintenanceStats) {
         this.maintenanceStats = maintenanceStats;
     }
 
@@ -64,18 +64,14 @@ public class Stats {
 
     }
 
-    //TODO: Aquest metode hauria de anar al service?
+    //TODO:this method should go to the service
     public void calculate()
     {
         weightLossStats.calculate();
         maintenanceStats.calculate();
         weightGainStats.calculate();
 
-
-        //necessitem mes dades
-
-        //TODO: HEM DE FER SERVIR EL COMPARATOR!!!
-        Comparator comp = new AverageCalStats.SortStats();
+        Comparator comp = new WeightStats.SortStats();
 
 
         log.info("[m:calculate] Comparem weightGainStats amb maintenanceStats i weightLossStats");
