@@ -17,6 +17,12 @@ public class CsvParser implements Parser {
 
         //FORMAT CODI_ANTIC;NOM_ANTIC;CODI_NOU;NOM_NOU;TIPUS_CANVI_TIPIFICAT;OBSERVACIONS
 
+        if(liniaCsv==null || liniaCsv.trim().equals(""))
+        {
+            log.error("[m:getInstance] Linia en blanc");
+            return null;
+        }
+
         Dia dia = new Dia();
         dia.setLinia(liniaCsv);
 

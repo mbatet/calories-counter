@@ -81,6 +81,8 @@ public class HomeController {
 		String textCsv = form.getText();
 		log.debug("[m:parse] textCsv: " + textCsv);
 
+
+
 		List<Dia> dies = weightStatsService.parse(textCsv);
 		List<Interval> intervals = weightStatsService.getIntervals(dies);
 		Interval lastWeek = weightStatsService.getLastWeek(dies);
@@ -106,7 +108,7 @@ public class HomeController {
 
 		if( intervals.size() > 0 ) {
 
-			//TODO: Aquest interval hauria d'anar al model de forma separada
+			//TODO: Aquest interval hauria d'anar al model de forma separada o anar directamment a dins de Stats
 			Interval intervalGeneral = intervals.get(0);
 			title += " " + Constants.FORMAT_DATE.format(intervalGeneral.getFirstDate()) + " to " + Constants.FORMAT_DATE.format(intervalGeneral.getLastDate());
 			intervals.remove(intervalGeneral);

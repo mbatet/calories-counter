@@ -46,6 +46,11 @@ public class WeightStatsService {
         List<String> llistaLinies = new ArrayList<String>(Arrays.asList(textToParse.split("\n")));
 
         llistaLinies.forEach( (final String linia) -> dies.add(parseLine(linia)));
+
+        //dies.forEach( (final Dia dia) -> { if(dia==null) dies.remove(dia); } );
+        while (dies.remove(null));
+
+
         log.info("[m:parse] hem parsejat: " + dies.size()  + " dies");
 
         Collections.sort(dies, new Dia.SortDies());

@@ -64,6 +64,7 @@ public class Stats {
 
     }
 
+    //TODO: Aquest metode hauria de anar al service?
     public void calculate()
     {
         weightLossStats.calculate();
