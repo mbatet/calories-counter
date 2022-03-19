@@ -43,7 +43,7 @@ public class ParseCvsTest {
     public  void setUp() throws IOException {
         // Set up database
 
-        String path = System.getProperties().getProperty("user.dir")+System.getProperties().getProperty("path.separator") + "sample.csv";
+        String path = System.getProperties().getProperty("user.dir")+System.getProperties().getProperty("file.separator") + "sample.csv";
 
         System.out.println("Llegim fitxer de dades: "+path);
         FileInputStream inputStream = new FileInputStream(path);
