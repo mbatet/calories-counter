@@ -154,11 +154,11 @@ public class ParseCvsTest {
         testStats (stats.getMaintenanceStats());
         //testStats (stats.getWeightGainStats());
 
-        Assert.assertTrue(stats.getMaintenanceStats().isNotEnoughData() || comp.compare(stats.getWeightLossStats(), stats.getMaintenanceStats()) < 1);
-        Assert.assertTrue(stats.getWeightGainStats().isNotEnoughData() || comp.compare(stats.getWeightLossStats(), stats.getWeightGainStats()) < 1);
+        Assert.assertTrue(stats.getMaintenanceStats().isNotEnoughData() || comp.compare(stats.getWeightLossStats(), stats.getMaintenanceStats()) < 0);
+        Assert.assertTrue(stats.getWeightGainStats().isNotEnoughData() || comp.compare(stats.getWeightLossStats(), stats.getWeightGainStats()) < 0);
 
-        Assert.assertTrue(stats.getWeightGainStats().isNotEnoughData() || comp.compare(stats.getWeightGainStats(), stats.getWeightLossStats()) > 1);
-        Assert.assertTrue(stats.getWeightGainStats().isNotEnoughData() || comp.compare(stats.getWeightGainStats(), stats.getMaintenanceStats()) > 1);
+        Assert.assertTrue(stats.getWeightGainStats().isNotEnoughData() || comp.compare(stats.getWeightGainStats(), stats.getWeightLossStats()) > 0);
+        Assert.assertTrue(stats.getWeightGainStats().isNotEnoughData() || comp.compare(stats.getWeightGainStats(), stats.getMaintenanceStats()) > 0);
 
 
 
