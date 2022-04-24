@@ -59,7 +59,7 @@ public class WeightStatsService {
 
         dies.forEach( (final Dia dia) -> log.debug("[m:parse] dia ordenat:" + dia.getDate()));
 
-        afegirDadesQueFalten(dies);
+        fillInMissingWeights(dies);
         calculateAdjustedWeights(dies);
 
         log.info("[m:parse] pesos ponderats");
@@ -166,7 +166,7 @@ public class WeightStatsService {
 
     }
 
-    private void afegirDadesQueFalten(List<Dia> dies)  {
+    private void fillInMissingWeights(List<Dia> dies)  {
 
         //TODO: what do we do when days are missing? we should insert the dates even if there are void of data...
         //TODO:guarantee there are not duplicate date
@@ -178,9 +178,22 @@ public class WeightStatsService {
         int apuntador = 0;
         for(Dia dia: dies)
         {
-            if(dia.getWeight()==null)
+            log.debug("[m:afegirDadesQueFalten][" + apuntador+"/"+ dies.size() + "] dia: " + dia);
+            if( dia.getWeight()==null )
             {
-                dia.setWeight( (dies.get(apuntador-1).getWeight() + dies.get(apuntador+1).getWeight())/2f);
+                //if(apuntador-1 >= 0 && apuntador+1 <= dies.size()) {
+
+                Float beforeWeight = dies.get(apuntador - 1).getWeight();// Aquest sempre esta ple
+                Float afterWeight = null; //Pot estar tb buit!
+
+                int nextDay = apuntador+1;
+                while  ( afterWeight == null && nextDay < dies.size()){
+                    afterWeight = dies.get(nextDay).getWeight();
+                    nextDay++;
+                }
+
+                dia.setWeight( ((beforeWeight + afterWeight)) / 2f);
+
             }
             apuntador++;
         }
