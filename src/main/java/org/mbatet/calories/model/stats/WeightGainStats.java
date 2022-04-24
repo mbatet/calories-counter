@@ -1,6 +1,6 @@
 package org.mbatet.calories.model.stats;
 
-public class WeightGainStats extends AverageCalStats {
+public class WeightGainStats extends WeightStats {
 
 
     public String getTitle(){return "Estimated/recommended cals for weight gain";}

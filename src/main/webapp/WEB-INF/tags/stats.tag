@@ -1,4 +1,4 @@
-<%@ attribute name="stats" required="true" type="org.mbatet.calories.model.stats.Stats" description="Les estadistiques"  %>
+<%@ attribute name="stats" required="true" type="org.mbatet.calories.model.stats.TrackingChart" description="Les estadistiques"  %>
 
 <%@ taglib prefix="tags" tagdir="/WEB-INF/tags"  %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>

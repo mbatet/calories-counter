@@ -2,8 +2,7 @@ package org.mbatet.calories.controller;
 
 
 import org.mbatet.calories.model.*;
-import org.mbatet.calories.model.stats.Stats;
-import org.mbatet.calories.model.stats.WeightLossStats;
+import org.mbatet.calories.model.stats.TrackingChart;
 import org.mbatet.calories.service.WeightStatsService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -81,12 +80,14 @@ public class HomeController {
 		String textCsv = form.getText();
 		log.debug("[m:parse] textCsv: " + textCsv);
 
+
+
 		List<Dia> dies = weightStatsService.parse(textCsv);
 		List<Interval> intervals = weightStatsService.getIntervals(dies);
 		Interval lastWeek = weightStatsService.getLastWeek(dies);
-		Stats stats = weightStatsService.getStatsFromIntervals(intervals);
+		TrackingChart stats = weightStatsService.getStatsFromIntervals(intervals);
 
-		//TODO: Posar a dins de stats i clacular a dins de getStatsFromIntervals
+		//TODO: Posar a dins de TrackingChart/Stats i clacular a dins de getStatsFromIntervals
 		Float calsLeft = weightStatsService.getCalsLeft( lastWeek, stats.getWeightLossStats());
 
 
@@ -106,7 +107,7 @@ public class HomeController {
 
 		if( intervals.size() > 0 ) {
 
-			//TODO: Aquest interval hauria d'anar al model de forma separada
+			//TODO: Aquest interval hauria d'anar al model de forma separada o anar directamment a dins de TrackingChart/Stats
 			Interval intervalGeneral = intervals.get(0);
 			title += " " + Constants.FORMAT_DATE.format(intervalGeneral.getFirstDate()) + " to " + Constants.FORMAT_DATE.format(intervalGeneral.getLastDate());
 			intervals.remove(intervalGeneral);
@@ -115,7 +116,7 @@ public class HomeController {
 
 
 
-		//TODO: AL tiol afegir dates... del tal al tal, en base a l'interval
+		//TODO: AL titol afegir dates... del tal al tal, en base a l'interval
 		model.addAttribute("title", title);
 
 

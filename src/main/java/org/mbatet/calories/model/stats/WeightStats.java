@@ -9,11 +9,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-public abstract class AverageCalStats {
-
-    //TODO: hauriem de tenir 3 tipus de Stats, una de WeightLossIntervalsStats, una de WeightGainIntervalsStats, una de MaintenanceIntervalsStats
-    //TODO: o a la inversa, hauriem de tenir 3 tipus de Stats, una de AverageCalsStats, una de AdjustedCalStats, una de ActivityStats
-    //TODO: O varies interficie diferents i la classe que creui les due sinterficie
+public abstract class WeightStats {
 
     //Havent restat les calories del exercici
     Float activityCals = 0F;
@@ -30,9 +26,9 @@ public abstract class AverageCalStats {
     List<Interval> intervals = new ArrayList<Interval>();
 
 
-    private static final Log log = LogFactory.getLog(AverageCalStats.class.getName());
+    private static final Log log = LogFactory.getLog(WeightStats.class.getName());
 
-    public AverageCalStats()
+    public WeightStats()
     {
 
     }
@@ -123,9 +119,9 @@ public abstract class AverageCalStats {
     }
 
 
-    public static class SortStats implements Comparator<AverageCalStats> {
+    public static class SortStats implements Comparator<WeightStats> {
         @Override
-        public int compare(AverageCalStats a, AverageCalStats b) {
+        public int compare(WeightStats a, WeightStats b) {
 
             //log.info("[m:compare] Comparem " + a.getRecomendedCals() + " (" + a.getAdjustedCals() + ") amb " + b.getRecomendedCals() + " (" + b.getAdjustedCals() + ")");
 

@@ -1,4 +1,4 @@
-<%@ attribute name="stats" required="true" type="org.mbatet.calories.model.stats.AverageCalStats" description="Les estadistiques"  %>
+<%@ attribute name="stats" required="true" type="org.mbatet.calories.model.stats.WeightStats" description="Les estadistiques"  %>
 <%@ tag import="org.mbatet.calories.model.Constants"%>
 <%@ tag import="java.lang.Math"%>
 

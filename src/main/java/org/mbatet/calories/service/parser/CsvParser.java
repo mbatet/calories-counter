@@ -15,6 +15,15 @@ public class CsvParser implements Parser {
 
     public Dia parse(String liniaCsv) {
 
+
+
+        if(liniaCsv==null || liniaCsv.trim().equals("") || liniaCsv.startsWith("#") )
+        {
+            log.error("[m:getInstance] Linia en blanc o comentari");
+            return null;
+        }
+
+
         //FORMAT CODI_ANTIC;NOM_ANTIC;CODI_NOU;NOM_NOU;TIPUS_CANVI_TIPIFICAT;OBSERVACIONS
 
         Dia dia = new Dia();

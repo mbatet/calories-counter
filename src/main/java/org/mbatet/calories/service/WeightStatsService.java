@@ -46,6 +46,11 @@ public class WeightStatsService {
         List<String> llistaLinies = new ArrayList<String>(Arrays.asList(textToParse.split("\n")));
 
         llistaLinies.forEach( (final String linia) -> dies.add(parseLine(linia)));
+
+        //dies.forEach( (final Dia dia) -> { if(dia==null) dies.remove(dia); } );
+        while (dies.remove(null));
+
+
         log.info("[m:parse] hem parsejat: " + dies.size()  + " dies");
 
         Collections.sort(dies, new Dia.SortDies());
@@ -54,7 +59,7 @@ public class WeightStatsService {
 
         dies.forEach( (final Dia dia) -> log.debug("[m:parse] dia ordenat:" + dia.getDate()));
 
-        afegirDadesQueFalten(dies);
+        fillInMissingWeights(dies);
         calculateAdjustedWeights(dies);
 
         log.info("[m:parse] pesos ponderats");
@@ -65,11 +70,11 @@ public class WeightStatsService {
     }
 
 
-    public Stats getStatsFromIntervals( List<Interval> intervals)
+    public TrackingChart getStatsFromIntervals(List<Interval> intervals)
     {
 
 
-        Stats stats = new Stats();
+        TrackingChart stats = new TrackingChart();
 
         for(Interval interval: intervals){
             stats.addInterval(interval);
@@ -161,11 +166,10 @@ public class WeightStatsService {
 
     }
 
-    private void afegirDadesQueFalten(List<Dia> dies)  {
+    private void fillInMissingWeights(List<Dia> dies)  {
 
-        //TODO: Que fem amb els dates que falten... haurien de posar els dies ni que estiguin buits...
-
-        //TODO: MIrar tb que no hi hagin dades repetides!!
+        //TODO: what do we do when days are missing? we should insert the dates even if there are void of data...
+        //TODO:guarantee there are not duplicate date
 
         //Pel moment, omplim els pesos que no tinguem, que es elq ue mes necessitem, sense la resta podem passar
 
@@ -174,9 +178,22 @@ public class WeightStatsService {
         int apuntador = 0;
         for(Dia dia: dies)
         {
-            if(dia.getWeight()==null)
+            log.debug("[m:afegirDadesQueFalten][" + apuntador+"/"+ dies.size() + "] dia: " + dia);
+            if( dia.getWeight()==null )
             {
-                dia.setWeight( (dies.get(apuntador-1).getWeight() + dies.get(apuntador+1).getWeight())/2f);
+                //if(apuntador-1 >= 0 && apuntador+1 <= dies.size()) {
+
+                Float beforeWeight = dies.get(apuntador - 1).getWeight();// Aquest sempre esta ple
+                Float afterWeight = null; //Pot estar tb buit!
+
+                int nextDay = apuntador+1;
+                while  ( afterWeight == null && nextDay < dies.size()){
+                    afterWeight = dies.get(nextDay).getWeight();
+                    nextDay++;
+                }
+
+                dia.setWeight( ((beforeWeight + afterWeight)) / 2f);
+
             }
             apuntador++;
         }
@@ -208,7 +225,7 @@ public class WeightStatsService {
             int numPesos = 0;
             for(int apuntador=first; apuntador<=last; apuntador++)
             {
-                //TODO: Que fem quan el pes es nul??
+                //TODO: what do we do if weigh is empty?
                 if(array[apuntador]!=null) {
                     sumaPesos += array[apuntador];
                     numPesos++; //ho fem aixi perque podriem tenir algun pes a null
