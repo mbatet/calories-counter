@@ -174,25 +174,40 @@ public class WeightStatsService {
         //Pel moment, omplim els pesos que no tinguem, que es elq ue mes necessitem, sense la resta podem passar
 
 
-
         int apuntador = 0;
         for(Dia dia: dies)
         {
-            log.debug("[m:afegirDadesQueFalten][" + apuntador+"/"+ dies.size() + "] dia: " + dia);
+            log.debug("[m:fillInMissingWeights][" + apuntador+"/"+ dies.size() + "] dia: " + dia);
             if( dia.getWeight()==null )
             {
                 //if(apuntador-1 >= 0 && apuntador+1 <= dies.size()) {
 
                 Float beforeWeight = dies.get(apuntador - 1).getWeight();// Aquest sempre esta ple
+                log.debug("[m:fillInMissingWeights][" + apuntador+"/"+ dies.size() + "] beforeWeight: " + beforeWeight);
+
                 Float afterWeight = null; //Pot estar tb buit!
 
                 int nextDay = apuntador+1;
                 while  ( afterWeight == null && nextDay < dies.size()){
+                   // log.debug("[m:fillInMissingWeights][" + apuntador+"/"+ dies.size() + "] nextDay: " + nextDay);
                     afterWeight = dies.get(nextDay).getWeight();
                     nextDay++;
                 }
 
+                //log.debug("[m:fillInMissingWeights][" + apuntador+"/"+ dies.size() + "] afterWeight: " + afterWeight);
+
+                //no sempre tenim afterWeight, si la última linia tampoc te el pes informat, el while no ha servit de res. Podem posar el pes del dia anterior o simplement descartar ek dua
+                if( afterWeight == null )
+                {
+                    log.error("[m:fillInMissingWeights][" + apuntador+"/"+ dies.size() + "] Error linia " + apuntador + " -  dia: " + dia + " - No podem estimar el darrer pes. Descartem aquest dia.");
+                    dies.remove(dia);
+                    return;
+                }
+
+
+                log.error("[m:fillInMissingWeights][" + apuntador+"/"+ dies.size() + "] Omplim el pes del dia " + apuntador + " amb la mitja entre beforeWeight i afterWeight = ((" + beforeWeight + " + " + afterWeight + ")/2)");
                 dia.setWeight( ((beforeWeight + afterWeight)) / 2f);
+
 
             }
             apuntador++;

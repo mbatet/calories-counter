@@ -34,7 +34,7 @@ public class Dia {
 
 
     public String toString(){
-        return "date:"+date +".pes:"   + weight +".calories:" + consumedCals + ".error:"+errorDescription;
+        return "date:"+date +".pes:"   + weight +".calories:" + consumedCals + ".error:"+(errorDescription!=null?errorDescription:"");
     }
 
     public Date getDate() {
@@ -97,14 +97,14 @@ public class Dia {
 
         if(this.weight ==null)
         {
-            setErrorDescription("Error parsejant linia: " + linia + " - Ens falta el pes");
+            setErrorDescription("Parsing linie error: Missing weight.");
         }
         if(this.consumedCals==null)
         {
-            setErrorDescription("Error parsejant linia: " + linia + " - Ens falten les calories consumides");
+            setErrorDescription("Parsing linie error:  Missing calories");
         }
         if(this.date==null) {
-            setErrorDescription("Error parsejant linia: " + linia + " - Ens falten la data");
+            setErrorDescription("Parsing linie error:  Missing date");
         }
     }
 
