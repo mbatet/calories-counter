@@ -7,15 +7,21 @@ import java.util.Map;
 public class Constants {
 
 
+
+    static public int TYPE_WEIGHT_LOSS = 0;
+    static public int TYPE_WEIGHT_GAIN = 1;
+
+
+
     public static final SimpleDateFormat FORMAT_DATE = new SimpleDateFormat("dd/MM/yyyy");
     //public static final SimpleDateFormat FORMAT_DATE_IN_TO_SHOW = new SimpleDateFormat("dd - MM - yyyyy");
 
-    public final static int FINESTRA_DIES_ENDAVANT_I_ENDARRERA = 2;
-    public final static int DEFAULT_MIDA_INTERVAL = 7;
-    public final static int MIN_MIDA_INTERVAL = 4;
+    public final static int DAYS_WINDOW = 2;
+    public final static int DEFAULT_INTERVAL_SIZE = 7;
+    public final static int MINIMUM_INTERVAL_SIZE = 4;
 
     //TODO: It should be configurable
-    public final static float MIN_AMMOUNT_WE_CONSIDER_IS_LOSING_WEIGHT = 0.15f;
+    //public final static float MIN_AMMOUNT_WE_CONSIDER_IS_LOSING_WEIGHT = 0.15f;
 
 
     public final static String WHEIGHT_TRACKING_CHART_RAW_WEIGHTS = "WHEIGHT_TRACKING_CHART_RAW_WEIGHTS";

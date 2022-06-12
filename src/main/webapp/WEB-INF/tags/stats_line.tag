@@ -16,7 +16,6 @@
         or <b>${Math.round(stats.adjustedCals)}</b> without
     </c:if>
 
-
 </td>
 
 

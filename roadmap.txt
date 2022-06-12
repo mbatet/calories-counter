@@ -1,0 +1,11 @@
+- importar format de dades de myfitnesspal
+- afegir tests amb fitxers i linies erronies i buides
+- guardar dades en bbdd
+- posar app+bbdd a un servidor al aws
+- fer app mobil
+- poder entrar les dades via smartphone 
+- poder entrar dades de consistència
+
+==== a nivell de codi ====
+
+- stratergy pattern

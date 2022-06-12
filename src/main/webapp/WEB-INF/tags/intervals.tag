@@ -37,7 +37,7 @@ return "dies:" + dies.size() + ".first:"+getFirstDate() + ".last:"+getLastDate()
 
     <c:forEach items="${intervals}" var="interval"  varStatus="loop">
 
-            <c:set var="trClass" value="${interval.type==Interval.TYPE_WEIGHT_LOSS_INTERVAL?'table-success': (interval.type==Interval.TYPE_WEIGHT_GAIN_INTERVAL?'table-danger':'table-warning')  }"/>
+            <c:set var="trClass" value="${interval.type==Constants.TYPE_WEIGHT_LOSS?'table-success': (interval.type==Constants.TYPE_WEIGHT_GAIN?'table-danger':'table-warning')  }"/>
             <c:if test="${!loop.last}">
                 <tr class="${trClass}">
                     <th scope="row">
@@ -59,7 +59,10 @@ return "dies:" + dies.size() + ".first:"+getFirstDate() + ".last:"+getLastDate()
                 </tr>
             </c:if>
             <c:if test="${loop.last}">
+                <%--
                 <tr class="${trClass}">
+                --%>
+                <tr class="table-warning">
                     <th scope="row">Total</th>
                     <th scope="row">${interval.dies.size()}</th>
                     <td><fmt:formatDate value="${interval.firstDate}" pattern="EEE dd/MM/yy"/></td>

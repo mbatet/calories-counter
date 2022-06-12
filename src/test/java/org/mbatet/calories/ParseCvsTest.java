@@ -115,7 +115,7 @@ public class ParseCvsTest {
 
         intervals.forEach( (final Interval interval) -> {
             Assert.assertNotNull(interval);
-            Assert.assertTrue(interval.getDies().size() >= Constants.MIN_MIDA_INTERVAL);
+            Assert.assertTrue(interval.getDies().size() >= Constants.MINIMUM_INTERVAL_SIZE);
             Assert.assertNotNull(interval.getFirstDay());
             Assert.assertNotNull(interval.getLastDay());
             Assert.assertNotNull(interval.getFirstDate());
@@ -148,17 +148,13 @@ public class ParseCvsTest {
         stats = weightStatsService.getStatsFromIntervals(intervals);
         Assert.assertNotNull(stats);
 
-
-
         testStats (stats.getWeightLossStats());
-        testStats (stats.getMaintenanceStats());
         //testStats (stats.getWeightGainStats());
 
-        Assert.assertTrue(stats.getMaintenanceStats().isNotEnoughData() || comp.compare(stats.getWeightLossStats(), stats.getMaintenanceStats()) < 0);
-        Assert.assertTrue(stats.getWeightGainStats().isNotEnoughData() || comp.compare(stats.getWeightLossStats(), stats.getWeightGainStats()) < 0);
 
+        Assert.assertTrue(stats.getWeightGainStats().isNotEnoughData() || comp.compare(stats.getWeightLossStats(), stats.getWeightGainStats()) < 0);
         Assert.assertTrue(stats.getWeightGainStats().isNotEnoughData() || comp.compare(stats.getWeightGainStats(), stats.getWeightLossStats()) > 0);
-        Assert.assertTrue(stats.getWeightGainStats().isNotEnoughData() || comp.compare(stats.getWeightGainStats(), stats.getMaintenanceStats()) > 0);
+
 
 
 

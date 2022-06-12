@@ -12,9 +12,7 @@ public class Interval {
 
 
 
-    static public int TYPE_WEIGHT_GAIN_INTERVAL = 1;
-    static public int TYPE_WEIGHT_LOSS_INTERVAL = -1;
-    static public int TYPE_MAINTENANCE_INTERVAL = 0;
+
 
     private static final Log log = LogFactory.getLog(Interval.class.getName());
 
@@ -191,21 +189,15 @@ public class Interval {
 
     public int getType()
     {
-        if(getWeigthDiff() < -Constants.MIN_AMMOUNT_WE_CONSIDER_IS_LOSING_WEIGHT ) //hem perdut pes
+        if(getWeigthDiff() <= 0 ) //hem perdut pes
         {
             //hem perdut pes
-            return TYPE_WEIGHT_LOSS_INTERVAL;
+            return Constants.TYPE_WEIGHT_LOSS;
 
         }
 
-        if( getWeigthDiff() > Constants.MIN_AMMOUNT_WE_CONSIDER_IS_LOSING_WEIGHT)
-        {
-            return TYPE_WEIGHT_GAIN_INTERVAL;
+        return Constants.TYPE_WEIGHT_GAIN;
 
-        }
-
-        //ens hem mantingut
-        return TYPE_MAINTENANCE_INTERVAL;
 
     }
 
