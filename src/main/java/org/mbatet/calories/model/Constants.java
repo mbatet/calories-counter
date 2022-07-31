@@ -17,7 +17,8 @@ public class Constants {
     //public static final SimpleDateFormat FORMAT_DATE_IN_TO_SHOW = new SimpleDateFormat("dd - MM - yyyyy");
 
     public final static int DAYS_WINDOW = 2;
-    public final static int DEFAULT_INTERVAL_SIZE = 7;
+    public final static int DEFAULT_INTERVAL_SIZE = 14;
+    //public final static int DEFAULT_INTERVAL_SIZE = 30;
     public final static int MINIMUM_INTERVAL_SIZE = 4;
 
     //TODO: It should be configurable

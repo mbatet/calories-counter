@@ -23,15 +23,15 @@ return "dies:" + dies.size() + ".first:"+getFirstDate() + ".last:"+getLastDate()
     <tr>
             <tags:stats_line stats="${stats.weightLossStats}"></tags:stats_line>
     </tr>
-    <tr>
-            <tags:stats_line stats="${stats.weightGainStats}"></tags:stats_line>
-    </tr>
-    <tr>
+    <tr class="table-warning">
         <th scope="row">Estimated/recommended cals for maintenance</th>
         <td><b>${Math.round(stats.maintenanceCals)}</b></td>
 
     </tr>
     <tr>
+            <tags:stats_line stats="${stats.weightGainStats}"></tags:stats_line>
+    </tr>
+    <tr class="table-warning">
         <tags:lastWeek interval="${lastWeek}"></tags:lastWeek>
     </tr>
 

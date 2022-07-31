@@ -42,7 +42,9 @@ return "dies:" + dies.size() + ".first:"+getFirstDate() + ".last:"+getLastDate()
                 <tr class="${trClass}">
                     <th scope="row">
                         <c:if test="${interval.dies.size()==7}">Week ${loop.index+1}</c:if>
-                        <c:if test="${interval.dies.size()!=7}">${interval.dies.size()} days period</c:if>
+                        <c:if test="${interval.dies.size()==14}">Fortnight ${loop.index+1}</c:if>
+                        <c:if test="${interval.dies.size()==30 || interval.dies.size()==31}">Month ${loop.index+1}</c:if>
+                        <c:if test="${interval.dies.size()!=7 && interval.dies.size()!=14 && interval.dies.size()!=30 && interval.dies.size()!=30 }">${interval.dies.size()} days period</c:if>
 
                     </th>
                     <td>${interval.dies.size()}</td>
