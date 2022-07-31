@@ -128,7 +128,7 @@ public class WeightStatsService {
             interval.addDia(dia);
             count++;
 
-            if( count == Constants.DEFAULT_MIDA_INTERVAL )
+            if( count == Constants.DEFAULT_INTERVAL_SIZE)
             {
                 interval = new Interval();
                 intervals.add(interval);
@@ -139,7 +139,7 @@ public class WeightStatsService {
 
         Interval last = intervals.get(intervals.size()-1);
 
-        if(last.getDies().size()< Constants.MIN_MIDA_INTERVAL)
+        if(last.getDies().size()< Constants.MINIMUM_INTERVAL_SIZE)
         {
             intervals.remove(last);
         }
@@ -229,8 +229,8 @@ public class WeightStatsService {
         i =0;
         for(Dia dia:dies){
 
-            int first = i - Constants.FINESTRA_DIES_ENDAVANT_I_ENDARRERA;
-            int last = i + Constants.FINESTRA_DIES_ENDAVANT_I_ENDARRERA;
+            int first = i - Constants.DAYS_WINDOW;
+            int last = i + Constants.DAYS_WINDOW;
 
             first = ( first < 0 ) ? 0 : first;
             last = ( last > dies.size()-1) ? dies.size()-1 : last;
@@ -262,7 +262,7 @@ public class WeightStatsService {
     }
 
 
-    public Float getCalsLeft(Interval lastWeek, WeightLossStats weightLossStats){
+    public Float getCalsLeft(Interval lastWeek, WeightStats weightLossStats){
 
         Float recommendedCals = weightLossStats.getRecomendedCals();
 

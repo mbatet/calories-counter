@@ -1,0 +1,17 @@
+- mostrar pes mes alt i pes mes baix
+- mostrar el numero de intervals
+- no comptar el interval global
+- poder configurar la mida de l'interval
+- importar format de dades de myfitnesspal
+- afegir tests amb fitxers i linies erronies i buides
+- guardar dades en bbdd
+- posar app+bbdd a un servidor al aws
+- fer app mobil
+- poder entrar les dades via smartphone 
+- poder entrar dades de consistència
+- que fer quan no tenim dades de calories consumides en un dia
+- mostrar num intervals en deficit i num de intervals en superhavit, i el pes perdut en uns i el pes guanyat en els altres
+
+==== a nivell de codi ====
+
+- stratergy pattern

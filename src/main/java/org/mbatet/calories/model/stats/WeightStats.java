@@ -2,6 +2,7 @@ package org.mbatet.calories.model.stats;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.mbatet.calories.model.Constants;
 import org.mbatet.calories.model.Interval;
 import org.mbatet.calories.service.Utils;
 
@@ -9,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-public abstract class WeightStats {
+public class WeightStats {
 
     //Havent restat les calories del exercici
     Float activityCals = 0F;
@@ -23,17 +24,38 @@ public abstract class WeightStats {
 
 
 
+    int type;
+
+
     List<Interval> intervals = new ArrayList<Interval>();
 
 
     private static final Log log = LogFactory.getLog(WeightStats.class.getName());
 
-    public WeightStats()
+    public WeightStats(int type)
     {
-
+        this.type=type;
     }
 
-    public abstract String getTitle();
+
+
+    //things that change
+    public String getTitle() {
+
+        if (this.type == Constants.TYPE_WEIGHT_GAIN) {
+            return "Avg. consumed cals during weight gain interval";
+        }
+
+        return "Avg. consumed cals during weight loss intervals";
+    }
+
+
+    //things that change
+    public String toString()
+    {
+            return (this.type == Constants.TYPE_WEIGHT_GAIN ? "[WHEIGHTGAIN]":"[WEIGHTLOSS]") + "activityCals:" + activityCals + " - consumedCals: " + consumedCals + " - adjustedCals: " + adjustedCals;
+    }
+
 
     public boolean isNotEnoughData()
     {
@@ -51,11 +73,6 @@ public abstract class WeightStats {
     }
 
 
-    public String toString()
-    {
-
-        return "activityCals:" + activityCals + " - consumedCals: " + consumedCals + " - adjustedCals: " + adjustedCals;
-    }
 
     public Float getActivityCals() {return Utils.roundToTens(activityCals);}
 
@@ -164,5 +181,19 @@ public abstract class WeightStats {
             return 0;
 
         }
+    }
+
+
+    final static WeightStats getWeightLossStatsInstance()
+    {
+
+        return new WeightStats(Constants.TYPE_WEIGHT_LOSS);
+
+    }
+
+    final static WeightStats getWeightGainStatsInstance()
+    {
+        return new  WeightStats(Constants.TYPE_WEIGHT_GAIN);
+
     }
 }
