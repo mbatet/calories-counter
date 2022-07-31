@@ -2,6 +2,7 @@ package org.mbatet.calories.model.stats;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.mbatet.calories.model.Constants;
 import org.mbatet.calories.model.Interval;
 
 import java.util.Comparator;
@@ -12,55 +13,50 @@ public class TrackingChart {
      * Només es una classe enbollcall per passar objecets a la vista
      * */
 
-    WeightGainStats weightGainStats = new WeightGainStats();
-    WeightMaintenanceStats maintenanceStats = new WeightMaintenanceStats();
-    WeightLossStats weightLossStats = new WeightLossStats();
+    WeightStats weightGainStats = WeightStats.getWeightGainStatsInstance();
+    WeightStats weightLossStats = WeightStats.getWeightLossStatsInstance();
 
     private static final Log log = LogFactory.getLog(TrackingChart.class.getName());
 
 
-    public WeightGainStats getWeightGainStats() {
+    public WeightStats getWeightGainStats() {
         return weightGainStats;
     }
 
-    public void setWeightGainStats(WeightGainStats weightGainStats) {
+    public void setWeightGainStats(WeightStats weightGainStats) {
         this.weightGainStats = weightGainStats;
     }
 
-    public WeightMaintenanceStats getMaintenanceStats() {
-        return maintenanceStats;
-    }
 
-    public void setMaintenanceStats(WeightMaintenanceStats maintenanceStats) {
-        this.maintenanceStats = maintenanceStats;
-    }
-
-    public WeightLossStats getWeightLossStats() {
+    public WeightStats getWeightLossStats() {
         return weightLossStats;
     }
 
-    public void setWeightLossStats(WeightLossStats weightLossStats) {
+    public void setWeightLossStats(WeightStats weightLossStats) {
         this.weightLossStats = weightLossStats;
+    }
+
+    public Double getMaintenanceCals()
+    {
+        if(this.weightGainStats.getRecomendedCals()==null || this.weightLossStats.getRecomendedCals()==null)
+        {
+            return null;
+        }
+
+        return (this.weightGainStats.getRecomendedCals() + this.weightLossStats.getRecomendedCals())/2.0;
+
     }
 
     public void addInterval(Interval interval)
     {
-        if( interval.getType() == Interval.TYPE_WEIGHT_LOSS_INTERVAL )
+        if( interval.getType() == Constants.TYPE_WEIGHT_LOSS )
         {
             this.weightLossStats.addInterval(interval);
             return;
         }
 
-        if( interval.getType() == Interval.TYPE_WEIGHT_GAIN_INTERVAL )
-        {
-            this.weightGainStats.addInterval(interval);
-            return;
-        }
 
-        //if(  interval.getType() == Interval.TYPE_MAINTENANCE_INTERVAL )
-
-        //ens hem mantingut
-        this.maintenanceStats.addInterval(interval);
+        this.weightGainStats.addInterval(interval);
 
     }
 
@@ -68,7 +64,6 @@ public class TrackingChart {
     public void calculate()
     {
         weightLossStats.calculate();
-        maintenanceStats.calculate();
         weightGainStats.calculate();
 
         Comparator comp = new WeightStats.SortStats();
@@ -76,7 +71,7 @@ public class TrackingChart {
 
         log.info("[m:calculate] Comparem weightGainStats amb maintenanceStats i weightLossStats");
         //if(weightGainStats.getRecomendedCals()!=null && weightGainStats.getRecomendedCals()<maintenanceStats.getRecomendedCals())
-        if( comp.compare(weightGainStats, maintenanceStats) < 1 || comp.compare(weightGainStats, weightLossStats) < 1)
+        if(  comp.compare(weightGainStats, weightLossStats) < 1)
         {
 
             log.info("[m:calculate] No tenim prou dades per tenir estadistiques de weightGainStats" );
@@ -85,7 +80,7 @@ public class TrackingChart {
 
         log.info("[m:calculate] Comparem weightLossStats amb maintenanceStats i weightGainStats");
         //if(weightLossStats.getRecomendedCals()!=null && weightLossStats.getRecomendedCals()>maintenanceStats.getRecomendedCals())
-        if( comp.compare(weightLossStats, maintenanceStats) >= 0 || comp.compare(weightLossStats, weightGainStats) >= 0)
+        if( comp.compare(weightLossStats, weightGainStats) > 0)
         {
 
             log.info("[m:calculate] No tenim prou dades per tenir estadistiques de weightLossStats" );
@@ -94,6 +89,8 @@ public class TrackingChart {
 
 
     }
+
+
 
 
     /*
