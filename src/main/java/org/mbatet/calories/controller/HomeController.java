@@ -84,6 +84,7 @@ public class HomeController {
 
 		List<Dia> dies = weightStatsService.parse(textCsv);
 		List<Interval> intervals = weightStatsService.getIntervals(dies);
+		Interval intervalGeneral = weightStatsService.getIntervalGeneral(dies);
 		Interval lastWeek = weightStatsService.getLastWeek(dies);
 		TrackingChart stats = weightStatsService.getStatsFromIntervals(intervals);
 
@@ -95,6 +96,7 @@ public class HomeController {
 		model.addAttribute("dies", dies);
 		model.addAttribute("type", form.getType());
 		model.addAttribute("intervals", intervals);
+		model.addAttribute("intervalGeneral", intervalGeneral);
 		model.addAttribute("lastWeek", lastWeek);
 		model.addAttribute("calsLeft", calsLeft);
 
@@ -105,6 +107,7 @@ public class HomeController {
 
 		String title =  Constants.CHART_TITTLE.get(form.getType());
 
+		/*
 		if( intervals.size() > 0 ) {
 
 			//TODO: Aquest interval hauria d'anar al model de forma separada o anar directamment a dins de TrackingChart/Stats
@@ -112,8 +115,9 @@ public class HomeController {
 			title += " " + Constants.FORMAT_DATE.format(intervalGeneral.getFirstDate()) + " to " + Constants.FORMAT_DATE.format(intervalGeneral.getLastDate());
 			intervals.remove(intervalGeneral);
 			intervals.add(intervalGeneral);
-		}
+		}*/
 
+		title += " " + Constants.FORMAT_DATE.format(intervalGeneral.getFirstDate()) + " to " + Constants.FORMAT_DATE.format(intervalGeneral.getLastDate());
 
 
 		//TODO: AL titol afegir dates... del tal al tal, en base a l'interval

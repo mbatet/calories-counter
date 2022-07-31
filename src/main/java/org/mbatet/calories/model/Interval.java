@@ -12,6 +12,7 @@ public class Interval {
 
 
 
+    //private boolean general = false;
 
 
     private static final Log log = LogFactory.getLog(Interval.class.getName());
@@ -19,8 +20,7 @@ public class Interval {
     List<Dia> dies = new ArrayList<Dia>();
 
 
-    public Interval()
-    {
+    public Interval(){
 
     }
 
@@ -29,11 +29,20 @@ public class Interval {
         this.dies = dies;
     }
 
+
     public String toString()
     {
         return "dies:" + dies.size() + ".first:"+getFirstDate() + ".last:"+getLastDate() + ".avgCalories:" + getAvgConsumedCals() + ".weightDiff:" + getWeigthDiff();
     }
 
+    /*
+    public boolean isGeneral() {
+        return general;
+    }
+
+    public void setGeneral(boolean general) {
+        this.general = general;
+    }*/
 
     public List<Dia> getDies() {
         return dies;

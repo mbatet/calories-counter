@@ -112,11 +112,21 @@ public class WeightStatsService {
         return lastWeek;
     }
 
+
+    public  Interval getIntervalGeneral(List<Dia> dies)
+    {
+
+        Interval intervalGeneral = new Interval(dies);
+        //intervalGeneral.setGeneral(true);
+
+        return intervalGeneral;
+    }
+
     public  List<Interval> getIntervals(List<Dia> dies)
     {
         List<Interval> intervals = new ArrayList<Interval>();
-        Interval intervalGeneral = new Interval(dies);
-        intervals.add(intervalGeneral);
+        //Interval intervalGeneral = new Interval(dies);
+        //intervals.add(intervalGeneral);
 
         int count = 0;
         Interval interval = new Interval();
