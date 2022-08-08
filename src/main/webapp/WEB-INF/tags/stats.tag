@@ -13,7 +13,7 @@ return "dies:" + dies.size() + ".first:"+getFirstDate() + ".last:"+getLastDate()
 
 
 
-<table class="table">
+<table class="table" border="0">
     <thead>
     <tr>
         <th scope="col" colspan="2"></th>
@@ -32,7 +32,9 @@ return "dies:" + dies.size() + ".first:"+getFirstDate() + ".last:"+getLastDate()
             <tags:stats_line stats="${stats.weightGainStats}"></tags:stats_line>
     </tr>
     <tr class="table-warning">
+
         <tags:lastWeek interval="${lastWeek}"></tags:lastWeek>
+
     </tr>
 
     </tbody>

@@ -90,6 +90,11 @@ public class HomeController {
 
 		//TODO: Posar a dins de TrackingChart/Stats i clacular a dins de getStatsFromIntervals
 		Float calsLeft = weightStatsService.getCalsLeft( lastWeek, stats.getWeightLossStats());
+		Float maxWeight = weightStatsService.getMaxWeight( dies);
+		Float minWeight = weightStatsService.getMinWeight( dies);
+
+		//Float maxWeight = 0F;
+		//Float minWeight = 0F;
 
 
 		//model.addAttribute("message", "CSV parsejat");
@@ -98,6 +103,8 @@ public class HomeController {
 		model.addAttribute("intervals", intervals);
 		model.addAttribute("intervalGeneral", intervalGeneral);
 		model.addAttribute("lastWeek", lastWeek);
+		model.addAttribute("maxWeight", maxWeight);
+		model.addAttribute("minWeight", minWeight);
 		model.addAttribute("calsLeft", calsLeft);
 
 

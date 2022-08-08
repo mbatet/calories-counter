@@ -36,6 +36,10 @@
                 <tags:stats stats="${stats}"></tags:stats>
 
             </c:if>
+
+
+            <tags:maxandminweight maxWeight="${maxWeight}" minWeight="${minWeight}"></tags:maxandminweight>
+
             <%@include file="shared/inici_link.jsp" %>
 
 

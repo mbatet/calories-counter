@@ -53,7 +53,7 @@ public class WeightStatsService {
 
         log.info("[m:parse] hem parsejat: " + dies.size()  + " dies");
 
-        Collections.sort(dies, new Dia.SortDies());
+        Collections.sort(dies, new Dia.SortDiesByDate());
 
         log.info("[m:parse] dies ordenats");
 
@@ -95,8 +95,7 @@ public class WeightStatsService {
         diesReversed.addAll(dies);
         Collections.reverse(diesReversed);
 
-        for(Dia dia: diesReversed)
-        {
+        for(Dia dia: diesReversed){
             Calendar cal = Calendar.getInstance();
             cal.setTime(dia.getDate());
 
@@ -138,8 +137,7 @@ public class WeightStatsService {
             interval.addDia(dia);
             count++;
 
-            if( count == Constants.DEFAULT_INTERVAL_SIZE)
-            {
+            if( count == Constants.DEFAULT_INTERVAL_SIZE) {
                 interval = new Interval();
                 intervals.add(interval);
                 count=0;
@@ -160,6 +158,32 @@ public class WeightStatsService {
 
 
         return intervals;
+    }
+
+    public Float getMaxWeight( List<Dia> dies){
+        Float maxWeight = 0F;
+
+       for(Dia dia:dies){
+           if(dia.getWeight()!=null && dia.getWeight()>maxWeight) maxWeight=dia.getWeight();
+
+       }
+
+       log.info("[m:getMaxWeight] retornem " + maxWeight);
+        return maxWeight;
+
+    }
+
+    public Float getMinWeight( List<Dia> dies){
+        Float minWeight = 10000F;
+
+        for(Dia dia:dies){
+            if(dia.getWeight()!=null && dia.getWeight()<minWeight) minWeight=dia.getWeight();
+
+        }
+
+        log.info("[m:getMinWeight] retornem " + minWeight);
+        return minWeight;
+
     }
 
 

@@ -109,7 +109,8 @@ public class Dia {
     }
 
 
-    public static class SortDies implements Comparator<Dia> {
+
+    public static class SortDiesByDate implements Comparator<Dia> {
         @Override
         public int compare(Dia a, Dia b) {
 
@@ -130,6 +131,56 @@ public class Dia {
 
         }
     }
+
+    /*
+
+    public static class SortDiesByWeight implements Comparator<Dia> {
+        @Override
+        public int compare(Dia a, Dia b) {
+
+
+
+            if( (a==null && b==null) || (a.getWeight() == null && b.getWeight() == null) )
+            {
+                log.debug("[m:compare] a i b son nulls retornem 0");
+                return 0;
+            }
+
+            //a>b ==> 1
+            //a<b ==> -11
+
+            //a es null pero b no
+            if(  b.getWeight() !=null && (a==null || a.getWeight() == null ))
+            {
+                log.debug("[m:compare] a es null i b no es null o a<b retornem -1");
+                return -1;
+            }
+
+            if(  a.getWeight() !=null && (b==null || b.getWeight() == null ))
+            {
+                log.debug("[m:compare] a es null i b no es null o a<b retornem -1");
+                return 1;
+            }
+
+
+            if( a.getWeight()<b.getWeight() )
+            {
+                log.debug("[m:compare] a es null i b no es null o a<b retornem -1");
+                return -1;
+            }
+
+
+            if( a.getWeight()>b.getWeight() )
+            {
+                log.debug("[m:compare] a > b retornem 1");
+                return 1;
+            }
+
+
+            return 0;
+
+        }
+    }*/
 }
 
 
