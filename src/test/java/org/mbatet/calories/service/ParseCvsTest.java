@@ -1,4 +1,4 @@
-package org.mbatet.calories;
+package org.mbatet.calories.service;
 
 import org.apache.commons.io.IOUtils;
 import org.junit.*;

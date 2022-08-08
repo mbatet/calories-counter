@@ -38,7 +38,7 @@
             </c:if>
 
 
-            <tags:maxandminweight maxWeight="${maxWeight}" minWeight="${minWeight}"></tags:maxandminweight>
+            <tags:maxandminweight maxWeight="${maxWeight}" minWeight="${minWeight}" currentWeight="${currentWeight}"></tags:maxandminweight>
 
             <%@include file="shared/inici_link.jsp" %>
 

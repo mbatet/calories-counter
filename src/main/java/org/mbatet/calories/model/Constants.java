@@ -11,6 +11,8 @@ public class Constants {
     static public int TYPE_WEIGHT_LOSS = 0;
     static public int TYPE_WEIGHT_GAIN = 1;
 
+    static public String VIEW_INDEX = "index";
+    static public String VIEW_CHART = "chart";
 
 
     public static final SimpleDateFormat FORMAT_DATE = new SimpleDateFormat("dd/MM/yyyy");

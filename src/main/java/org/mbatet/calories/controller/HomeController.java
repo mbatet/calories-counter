@@ -54,17 +54,17 @@ public class HomeController {
 
 
 	@RequestMapping(value={"","/", "/index", "/form"}, method = RequestMethod.GET)
-	public String form(Model model, HttpServletRequest request){
+	public String index(Model model, HttpServletRequest request){
 
 		Form form = new Form();
 		model.addAttribute(form);
 
-		return "index";
+		return Constants.VIEW_INDEX;
 	}
 
 
-	@RequestMapping(value={"/parse"}, method = RequestMethod.POST)
-	public String parse(Model model, @Validated Form form) throws IOException {
+	@RequestMapping(value={"/chart"}, method = RequestMethod.POST)
+	public String chart(Model model, @Validated Form form) throws IOException {
 
 		log.info("[m:parse] " + form);
 
@@ -72,7 +72,7 @@ public class HomeController {
 		{
 			log.error("[m:parse] No s'ha trobat fitxer ni text a parsejar...");
 			model.addAttribute("message", "No s'ha trobat res a parsejar");
-			return "index";
+			return Constants.VIEW_INDEX;
 
 		}
 
@@ -92,6 +92,8 @@ public class HomeController {
 		Float calsLeft = weightStatsService.getCalsLeft( lastWeek, stats.getWeightLossStats());
 		Float maxWeight = weightStatsService.getMaxWeight( dies);
 		Float minWeight = weightStatsService.getMinWeight( dies);
+		Float currentWeight = intervalGeneral.getLastDay().getWeight();
+
 
 		//Float maxWeight = 0F;
 		//Float minWeight = 0F;
@@ -103,13 +105,17 @@ public class HomeController {
 		model.addAttribute("intervals", intervals);
 		model.addAttribute("intervalGeneral", intervalGeneral);
 		model.addAttribute("lastWeek", lastWeek);
+		model.addAttribute("calsLeft", calsLeft);
+		model.addAttribute("calsLeft", calsLeft);
 		model.addAttribute("maxWeight", maxWeight);
 		model.addAttribute("minWeight", minWeight);
-		model.addAttribute("calsLeft", calsLeft);
+		model.addAttribute("currentWeight", currentWeight);
 
 
 		//fer diferent, un objecte global amb les stats o
 		model.addAttribute("stats", stats);
+
+
 
 
 		String title =  Constants.CHART_TITTLE.get(form.getType());
@@ -131,7 +137,7 @@ public class HomeController {
 		model.addAttribute("title", title);
 
 
-		return "chart";
+		return Constants.VIEW_CHART;
 	}
 
 

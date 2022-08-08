@@ -22,7 +22,7 @@
             <br/><br/>
 
 
-            <form:form method="POST" action="parse" modelAttribute="form" enctype="multipart/form-data">
+            <form:form method="POST" action="chart" modelAttribute="form" enctype="multipart/form-data">
 
                 <!-- PUJDAR DESDE FITXER CVS -->
 
