@@ -1,3 +1,5 @@
+- els intervals els calcularà en funcio de les dades que tinguem, 7 dies si amb la mesura seguent tenim mensy de 4 intervals, 14 dies si amb tenim mes de x intervals, un mes si tenim propus dades
+
 - el pes menor i major el podem afegir a l'interval i calcular-lo en el moment de recorrer els dies, sera mes optim, dspres nome´s cal que agafem el mes gran (o mes petit) del mes grand e cadauinterval, son menys num a comparar
 - afegir test de que tenim tots els valors al model al sortir del controlador (ex: model.get("calsLeft") != null
 - afegir tests de minweight i maxweight

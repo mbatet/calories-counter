@@ -118,7 +118,7 @@ public class HomeController {
 
 
 
-		String title =  Constants.CHART_TITTLE.get(form.getType());
+		String title =  Constants.CHART_TITLE.get(form.getType());
 
 		/*
 		if( intervals.size() > 0 ) {

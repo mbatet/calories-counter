@@ -31,9 +31,9 @@
                 -->
                 <!-- TODO: Aqui fer un loop sobre el hashmap-->
                 <form:select path="type" name="type" id="type" >
-                    <form:option  value="${Constants.WHEIGHT_TRACKING_CHART_RAW_WEIGHTS}">${Constants.CHART_TITTLE.get(Constants.WHEIGHT_TRACKING_CHART_RAW_WEIGHTS)}</form:option>
-                    <form:option  value="${Constants.WHEIGHT_TRACKING_CHART_ADJUSTED_WEIGHTS}">${Constants.CHART_TITTLE.get(Constants.WHEIGHT_TRACKING_CHART_ADJUSTED_WEIGHTS)}</form:option>
-                    <form:option  value="${Constants.WHEIGHT_TRACKING_CHART_TWO_SERIES_RAW_AND_ADJUSTED}">${Constants.CHART_TITTLE.get(Constants.WHEIGHT_TRACKING_CHART_TWO_SERIES_RAW_AND_ADJUSTED)}</form:option>
+                    <form:option  value="${Constants.WHEIGHT_TRACKING_CHART_RAW_WEIGHTS}">${Constants.CHART_TITLE.get(Constants.WHEIGHT_TRACKING_CHART_RAW_WEIGHTS)}</form:option>
+                    <form:option  value="${Constants.WHEIGHT_TRACKING_CHART_ADJUSTED_WEIGHTS}">${Constants.CHART_TITLE.get(Constants.WHEIGHT_TRACKING_CHART_ADJUSTED_WEIGHTS)}</form:option>
+                    <form:option  value="${Constants.WHEIGHT_TRACKING_CHART_TWO_SERIES_RAW_AND_ADJUSTED}">${Constants.CHART_TITLE.get(Constants.WHEIGHT_TRACKING_CHART_TWO_SERIES_RAW_AND_ADJUSTED)}</form:option>
 
                 </form:select>
                 <br/><br/>

@@ -18,7 +18,7 @@
 
 
     <c:if test="${calsLeft!=null}">
-        You can eat an average of <b>${Math.round(calsLeft)}</b> cals or less in those ${7-lastWeek.dies.size()} days left to be in a calorie deficit.
+        You can eat an average of <b>${Math.round(calsLeft)}</b> cals or less in those ${7-lastWeek.dies.size()} days left to be below maintenance <strike>in a calorie deficit</strike>.
     </c:if>
 
 

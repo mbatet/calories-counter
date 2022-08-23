@@ -9,7 +9,16 @@ public class Constants {
 
 
     static public int TYPE_WEIGHT_LOSS = 0;
-    static public int TYPE_WEIGHT_GAIN = 1;
+    static public int TYPE_WEIGHT_MAINTENANCE = 1;
+    static public int TYPE_WEIGHT_GAIN = 2;
+
+    public static Map<Integer, String> INTERVAL_TYPE =
+            new HashMap<Integer, String>() {{
+                put(TYPE_WEIGHT_LOSS, "weight loss");
+                put(TYPE_WEIGHT_MAINTENANCE, "maintenance");
+                put(TYPE_WEIGHT_GAIN, "weight gain");
+            }};
+
 
     static public String VIEW_INDEX = "index";
     static public String VIEW_CHART = "chart";
@@ -19,12 +28,14 @@ public class Constants {
     //public static final SimpleDateFormat FORMAT_DATE_IN_TO_SHOW = new SimpleDateFormat("dd - MM - yyyyy");
 
     public final static int DAYS_WINDOW = 2;
-    public final static int DEFAULT_INTERVAL_SIZE = 14;
+    public final static int DEFAULT_INTERVAL_SIZE = 30;
     //public final static int DEFAULT_INTERVAL_SIZE = 30;
     public final static int MINIMUM_INTERVAL_SIZE = 4;
 
     //TODO: It should be configurable
-    //public final static float MIN_AMMOUNT_WE_CONSIDER_IS_LOSING_WEIGHT = 0.15f;
+    public final static float MIN_AMMOUNT_WE_CONSIDER_IS_LOSING_WEIGHT = 0.2f;
+
+    public final static int CALS_BELOW_MAINTENANCE_TO_LOSE_WEIGHT = 200;
 
 
     public final static String WHEIGHT_TRACKING_CHART_RAW_WEIGHTS = "WHEIGHT_TRACKING_CHART_RAW_WEIGHTS";
@@ -33,7 +44,7 @@ public class Constants {
 
     //AFEGIR UN GRAFIC DE CALORIES COSNUMIDES
 
-    public static Map<String, String> CHART_TITTLE =
+    public static Map<String, String> CHART_TITLE =
             new HashMap<String, String>() {{
                 put(WHEIGHT_TRACKING_CHART_RAW_WEIGHTS, "Weight tracking chart (raw data)");
                 put(WHEIGHT_TRACKING_CHART_ADJUSTED_WEIGHTS, "Weight tracking chart (adjusted weight)");
