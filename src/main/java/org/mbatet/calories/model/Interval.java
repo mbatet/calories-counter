@@ -198,13 +198,27 @@ public class Interval {
 
     public int getType()
     {
-        if(getWeigthDiff() <= 0 ) //hem perdut pes
+
+
+       // if(getWeigthDiff() <= 0 ) //hem perdut pes
+        if( getWeigthDiff() < -Constants.MIN_AMMOUNT_WE_CONSIDER_IS_LOSING_WEIGHT )
         {
             //hem perdut pes
+            log.info("[m:getType]  getWeigthDiff: " + getWeigthDiff()  + ": Retornem TYPE_WEIGHT_LOSS");
             return Constants.TYPE_WEIGHT_LOSS;
 
         }
 
+        //	0.03 Kg
+        //hem perdut entre 0 i MIN_AMMOUNT_WE_CONSIDER_IS_LOSING_WEIGHT
+        if(getWeigthDiff() <= 0.0 ){
+
+            log.info("[m:getType]  getWeigthDiff: " + getWeigthDiff()  + ": Retornem TYPE_WEIGHT_MAINTENANCE");
+            return Constants.TYPE_WEIGHT_MAINTENANCE;
+        }
+
+        //HEM GUANYAT PES
+        log.info("[m:getType]  getWeigthDiff: " + getWeigthDiff()  + ": Retornem TYPE_WEIGHT_GAIN");
         return Constants.TYPE_WEIGHT_GAIN;
 
 

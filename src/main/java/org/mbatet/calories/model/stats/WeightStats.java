@@ -9,22 +9,23 @@ import org.mbatet.calories.service.Utils;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
 
 public class WeightStats {
+
+    int type;
 
     //Havent restat les calories del exercici
     Float activityCals = 0F;
     Float adjustedCals = 0F;
     Float consumedCals = 0F;
 
-    //Es igual que a consumedCals pero pot ser null, cosa que consumedCals semrpe hot enim, com a mínim, a 0
     Float recomendedCals;
+    //Es igual que a consumedCals pero pot ser null, cosa que consumedCals pot ser 0, no se com eliminar-ho, pero potser cal dir-li diferent, consumedCalsOrNUll
+    //TODO: ES EL MATEIX QUE CONSUMED CALS, CAL ELIMINAR
 
     boolean notEnoughData = false;
 
-
-
-    int type;
 
 
     List<Interval> intervals = new ArrayList<Interval>();
@@ -41,26 +42,24 @@ public class WeightStats {
 
     //things that change
     public String getTitle() {
-
-        if (this.type == Constants.TYPE_WEIGHT_GAIN) {
-            return "Avg. consumed cals during weight gain interval";
-        }
-
-        return "Avg. consumed cals during weight loss intervals";
+        return "Avg. consumed cals during " + Constants.INTERVAL_TYPE.get(this.type) + " interval";
     }
 
 
     //things that change
     public String toString()
     {
-            return (this.type == Constants.TYPE_WEIGHT_GAIN ? "[WHEIGHTGAIN]":"[WEIGHTLOSS]") + "activityCals:" + activityCals + " - consumedCals: " + consumedCals + " - adjustedCals: " + adjustedCals;
+
+        String title = Constants.INTERVAL_TYPE.get(this.type).toUpperCase(Locale.ROOT);
+        return "[" + title + "] activityCals:" + activityCals + " - consumedCals: " + consumedCals + " - adjustedCals: " + adjustedCals;
     }
 
 
     public boolean isNotEnoughData()
     {
-        if(this.intervals.size()==0)
+        if( this.intervals.size() == 0 )
         {
+            log.warn("[m:isNotEnoughData] We dont have intervals of the type " + Constants.INTERVAL_TYPE.get(this.type));
             return true;
         }
 
@@ -71,7 +70,6 @@ public class WeightStats {
     {
         this.notEnoughData = notEnough;
     }
-
 
 
     public Float getActivityCals() {return Utils.roundToTens(activityCals);}
@@ -92,6 +90,7 @@ public class WeightStats {
     public void setConsumedCals(Float consumedCals) {
         this.consumedCals = consumedCals;
     }
+
 
     public Float getRecomendedCals() {return Utils.roundToTens(recomendedCals);}
 
@@ -123,6 +122,8 @@ public class WeightStats {
 
         //TODO: Hauria de ser ponderat, no una mitja de les calories consumides, exactament si o que al calcul hauria de tenri mes pes
         //els intervals en que el guany de pes es menor o major!
+
+        //TODO: tb podria ser adjustedCals o  adjustedCals+(mitja d'esport que portem darrerament)
         this.recomendedCals =  this.consumedCals;
 
     }
@@ -184,16 +185,13 @@ public class WeightStats {
     }
 
 
-    final static WeightStats getWeightLossStatsInstance()
-    {
-
+    final static WeightStats getWeightLossStatsInstance(){
         return new WeightStats(Constants.TYPE_WEIGHT_LOSS);
-
     }
 
-    final static WeightStats getWeightGainStatsInstance()
-    {
+    final static WeightStats getWeightGainStatsInstance(){
         return new  WeightStats(Constants.TYPE_WEIGHT_GAIN);
-
     }
+
+    final static WeightStats getWeightMaintenanceStatsInstance(){return new  WeightStats(Constants.TYPE_WEIGHT_MAINTENANCE);}
 }

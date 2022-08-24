@@ -1,7 +1,8 @@
 <%@ attribute name="interval" required="true" type="org.mbatet.calories.model.Interval" description="Un interval"  %>
 <%@ attribute name="index" required="false" type="java.lang.Integer" description="Index"  %>
 
-<%@ tag import="org.mbatet.calories.model.Constants"%>
+<%@ tag import="org.mbatet.calories.service.FrontEndUtils"%>
+<%@ tag import="org.mbatet.calories.service.Utils"%>
 <%@ tag import="java.lang.Math"%>
 <%@ taglib prefix="tags" tagdir="/WEB-INF/tags"  %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -9,7 +10,7 @@
 <%@ tag pageEncoding="UTF-8" %>
 
 
-<c:set var="trClass" value="${interval.type==Constants.TYPE_WEIGHT_LOSS?'table-success': (interval.type==Constants.TYPE_WEIGHT_GAIN?'table-danger':'table-warning')  }"/>
+<c:set var="trClass" value="${FrontEndUtils.tableClass(interval.type)}"/>
 <c:if test="${index!=null}">
     <tr class="${trClass}">
         <th scope="row">
@@ -33,7 +34,7 @@
     </tr>
 </c:if>
 <c:if test="${index==null}">
-    <tr class="table-warning">
+    <tr class="${trClass}">
         <th scope="row">Total</th>
         <th scope="row">${interval.dies.size()}</th>
         <td><fmt:formatDate value="${interval.firstDate}" pattern="EEE dd/MM/yy"/></td>

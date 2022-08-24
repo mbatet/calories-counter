@@ -298,7 +298,9 @@ public class WeightStatsService {
 
     public Float getCalsLeft(Interval lastWeek, WeightStats weightLossStats){
 
+        //TODO: canviar-ho per getCaloriesBelowMaintenance, o millor encara, agafar el menor dels dos valors
         Float recommendedCals = weightLossStats.getRecomendedCals();
+
 
         log.info("[m:getCalsLeft]  weightLossStats.getRecomendedCals: " + recommendedCals);
 

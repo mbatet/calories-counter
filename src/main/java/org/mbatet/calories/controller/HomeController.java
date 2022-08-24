@@ -88,7 +88,7 @@ public class HomeController {
 		Interval lastWeek = weightStatsService.getLastWeek(dies);
 		TrackingChart stats = weightStatsService.getStatsFromIntervals(intervals);
 
-		//TODO: Posar a dins de TrackingChart/Stats i clacular a dins de getStatsFromIntervals
+		//TODO: TOT aixo haurien de ser variabels de stats i posar a dins de TrackingChart/Stats i clacular a dins de getStatsFromIntervals
 		Float calsLeft = weightStatsService.getCalsLeft( lastWeek, stats.getWeightLossStats());
 		Float maxWeight = weightStatsService.getMaxWeight( dies);
 		Float minWeight = weightStatsService.getMinWeight( dies);
@@ -100,6 +100,8 @@ public class HomeController {
 
 
 		//model.addAttribute("message", "CSV parsejat");
+		//TODO: fer diferent, un objecte global amb les stats o
+		model.addAttribute("stats", stats);
 		model.addAttribute("dies", dies);
 		model.addAttribute("type", form.getType());
 		model.addAttribute("intervals", intervals);
@@ -112,13 +114,12 @@ public class HomeController {
 		model.addAttribute("currentWeight", currentWeight);
 
 
-		//fer diferent, un objecte global amb les stats o
-		model.addAttribute("stats", stats);
 
 
 
 
-		String title =  Constants.CHART_TITTLE.get(form.getType());
+
+		String title =  Constants.CHART_TITLE.get(form.getType());
 
 		/*
 		if( intervals.size() > 0 ) {
