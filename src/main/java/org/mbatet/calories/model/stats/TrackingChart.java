@@ -55,7 +55,7 @@ public class TrackingChart {
 
     }
 
-    public Double getWeightLossCals()
+    public Double getCaloriesBelowMaintenance()
     {
 
         return (this.getMaintenanceCals() - Constants.CALS_BELOW_MAINTENANCE_TO_LOSE_WEIGHT);

@@ -38,8 +38,8 @@ return "dies:" + dies.size() + ".first:"+getFirstDate() + ".last:"+getLastDate()
     </tr>
 
     <tr class="table-warning">
-        <th scope="row">Optimize calorie deficit calories</th>
-        <td><b>${Math.round(stats.weightLossCals)}</b></td>
+        <th scope="row">Daily calorie intake to optimize calorie deficit</th>
+        <td><b>${Math.round(stats.caloriesBelowMaintenance)}</b></td>
     </tr>
 
     <tr class="table-warning">

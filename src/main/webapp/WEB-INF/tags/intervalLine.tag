@@ -2,6 +2,7 @@
 <%@ attribute name="index" required="false" type="java.lang.Integer" description="Index"  %>
 
 <%@ tag import="org.mbatet.calories.service.FrontEndUtils"%>
+<%@ tag import="org.mbatet.calories.service.Utils"%>
 <%@ tag import="java.lang.Math"%>
 <%@ taglib prefix="tags" tagdir="/WEB-INF/tags"  %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>

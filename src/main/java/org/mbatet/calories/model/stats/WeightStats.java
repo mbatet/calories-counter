@@ -20,8 +20,10 @@ public class WeightStats {
     Float adjustedCals = 0F;
     Float consumedCals = 0F;
 
-    //Es igual que a consumedCals pero pot ser null, cosa que consumedCals semrpe hot enim, com a mínim, a 0
     Float recomendedCals;
+    //Es igual que a consumedCals pero pot ser null, cosa que consumedCals pot ser 0, no se com eliminar-ho, pero potser cal dir-li diferent, consumedCalsOrNUll
+    //TODO: ES EL MATEIX QUE CONSUMED CALS, CAL ELIMINAR
+
     boolean notEnoughData = false;
 
 
@@ -88,6 +90,7 @@ public class WeightStats {
     public void setConsumedCals(Float consumedCals) {
         this.consumedCals = consumedCals;
     }
+
 
     public Float getRecomendedCals() {return Utils.roundToTens(recomendedCals);}
 
