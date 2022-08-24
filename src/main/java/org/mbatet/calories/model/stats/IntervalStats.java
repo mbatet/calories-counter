@@ -11,7 +11,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 
-public class WeightStats {
+public class IntervalStats {
 
     int type;
 
@@ -31,9 +31,9 @@ public class WeightStats {
     List<Interval> intervals = new ArrayList<Interval>();
 
 
-    private static final Log log = LogFactory.getLog(WeightStats.class.getName());
+    private static final Log log = LogFactory.getLog(IntervalStats.class.getName());
 
-    public WeightStats(int type)
+    public IntervalStats(int type)
     {
         this.type=type;
     }
@@ -137,9 +137,9 @@ public class WeightStats {
     }
 
 
-    public static class SortStats implements Comparator<WeightStats> {
+    public static class SortStats implements Comparator<IntervalStats> {
         @Override
-        public int compare(WeightStats a, WeightStats b) {
+        public int compare(IntervalStats a, IntervalStats b) {
 
             //log.info("[m:compare] Comparem " + a.getRecomendedCals() + " (" + a.getAdjustedCals() + ") amb " + b.getRecomendedCals() + " (" + b.getAdjustedCals() + ")");
 
@@ -185,13 +185,13 @@ public class WeightStats {
     }
 
 
-    final static WeightStats getWeightLossStatsInstance(){
-        return new WeightStats(Constants.TYPE_WEIGHT_LOSS);
+    final static IntervalStats getWeightLossStatsInstance(){
+        return new IntervalStats(Constants.TYPE_WEIGHT_LOSS);
     }
 
-    final static WeightStats getWeightGainStatsInstance(){
-        return new  WeightStats(Constants.TYPE_WEIGHT_GAIN);
+    final static IntervalStats getWeightGainStatsInstance(){
+        return new IntervalStats(Constants.TYPE_WEIGHT_GAIN);
     }
 
-    final static WeightStats getWeightMaintenanceStatsInstance(){return new  WeightStats(Constants.TYPE_WEIGHT_MAINTENANCE);}
+    final static IntervalStats getWeightMaintenanceStatsInstance(){return new IntervalStats(Constants.TYPE_WEIGHT_MAINTENANCE);}
 }

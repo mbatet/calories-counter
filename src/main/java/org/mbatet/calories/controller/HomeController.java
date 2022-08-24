@@ -2,7 +2,8 @@ package org.mbatet.calories.controller;
 
 
 import org.mbatet.calories.model.*;
-import org.mbatet.calories.model.stats.TrackingChart;
+import org.mbatet.calories.model.stats.GeneralStats;
+import org.mbatet.calories.service.ParseService;
 import org.mbatet.calories.service.WeightStatsService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,6 +29,9 @@ public class HomeController {
 
 	@Autowired
 	private WeightStatsService weightStatsService;
+
+	@Autowired
+	private ParseService parseService;
 
 	/*@Value("${serveis.urlApp}")
 	String serveisUrlApp;*/
@@ -81,18 +85,21 @@ public class HomeController {
 		log.debug("[m:parse] textCsv: " + textCsv);
 
 
+		List<Dia> dies = parseService.parse(textCsv);
+		GeneralStats stats = weightStatsService.getStatsFromData(dies);
 
-		List<Dia> dies = weightStatsService.parse(textCsv);
-		List<Interval> intervals = weightStatsService.getIntervals(dies);
-		Interval intervalGeneral = weightStatsService.getIntervalGeneral(dies);
-		Interval lastWeek = weightStatsService.getLastWeek(dies);
-		TrackingChart stats = weightStatsService.getStatsFromIntervals(intervals);
+
+		//TODO: No utilitzar aquestes variabels si no que al frontal ho afagarem directament de stats que tb ho tenim
+		List<Interval> intervals = stats.getIntervals();
+		Interval intervalGeneral = stats.getIntervalGeneral();
+		Interval lastWeek = stats.getLastWeek();
+
 
 		//TODO: TOT aixo haurien de ser variabels de stats i posar a dins de TrackingChart/Stats i clacular a dins de getStatsFromIntervals
 		Float calsLeft = weightStatsService.getCalsLeft( lastWeek, stats.getWeightLossStats());
-		Float maxWeight = weightStatsService.getMaxWeight( dies);
-		Float minWeight = weightStatsService.getMinWeight( dies);
-		Float currentWeight = intervalGeneral.getLastDay().getWeight();
+		Float maxWeight = stats.getMaxWeight( );
+		Float minWeight = stats.getMinWeight( );
+		Float currentWeight = stats.getCurrentWeight();
 
 
 		//Float maxWeight = 0F;
@@ -102,12 +109,15 @@ public class HomeController {
 		//model.addAttribute("message", "CSV parsejat");
 		//TODO: fer diferent, un objecte global amb les stats o
 		model.addAttribute("stats", stats);
-		model.addAttribute("dies", dies);
 		model.addAttribute("type", form.getType());
+
+		//TODO: No utilitzar aquestes variabels si no que al frontal ho afagarem directament de stats que tb ho tenim
+		model.addAttribute("dies", dies);
 		model.addAttribute("intervals", intervals);
 		model.addAttribute("intervalGeneral", intervalGeneral);
+
+
 		model.addAttribute("lastWeek", lastWeek);
-		model.addAttribute("calsLeft", calsLeft);
 		model.addAttribute("calsLeft", calsLeft);
 		model.addAttribute("maxWeight", maxWeight);
 		model.addAttribute("minWeight", minWeight);

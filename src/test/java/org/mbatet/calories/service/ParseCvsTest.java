@@ -6,9 +6,8 @@ import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.mbatet.calories.model.*;
-import org.mbatet.calories.model.stats.WeightStats;
-import org.mbatet.calories.model.stats.TrackingChart;
-import org.mbatet.calories.service.WeightStatsService;
+import org.mbatet.calories.model.stats.IntervalStats;
+import org.mbatet.calories.model.stats.GeneralStats;
 import org.mbatet.calories.service.parser.CsvParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -23,7 +22,7 @@ import java.util.List;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes={WeightStatsService.class, CsvParser.class})
+@SpringBootTest(classes={WeightStatsService.class, CsvParser.class, ParseService.class})
 @ActiveProfiles("local_execution")
 //@ActiveProfiles("local_execution")
 public class ParseCvsTest {
@@ -32,11 +31,14 @@ public class ParseCvsTest {
     @Autowired
     WeightStatsService weightStatsService;
 
+    @Autowired
+    ParseService parseService;
+
 
     String data = null;
     List<Dia> dies = null;
     List<Interval> intervals = null;
-    TrackingChart stats = null;
+    GeneralStats stats = null;
 
 
     @BeforeAll
@@ -80,7 +82,7 @@ public class ParseCvsTest {
 
         String text = form.getText();
 
-        dies = weightStatsService.parse(text);
+        dies = parseService.parse(text);
 
         Assert.assertNotNull(dies);
 
@@ -146,9 +148,9 @@ public class ParseCvsTest {
     @Order(3)
     public void testGetStats () throws IOException {
 
-        Comparator comp = new WeightStats.SortStats();
+        Comparator comp = new IntervalStats.SortStats();
 
-        stats = weightStatsService.getStatsFromIntervals(intervals);
+        stats = weightStatsService.getStatsFromData(dies);
         Assert.assertNotNull(stats);
 
         testStats (stats.getWeightLossStats());
@@ -164,7 +166,7 @@ public class ParseCvsTest {
 
     }
 
-    public void testStats (WeightStats avgCalStats) throws IOException {
+    public void testStats (IntervalStats avgCalStats) throws IOException {
 
         Assert.assertNotNull(avgCalStats.getConsumedCals());
         Assert.assertNotNull(avgCalStats.getActivityCals());

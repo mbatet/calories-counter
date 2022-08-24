@@ -9,7 +9,8 @@ import org.mbatet.calories.model.Constants;
 import org.mbatet.calories.model.Dia;
 import org.mbatet.calories.model.Form;
 import org.mbatet.calories.model.Interval;
-import org.mbatet.calories.model.stats.TrackingChart;
+import org.mbatet.calories.model.stats.GeneralStats;
+import org.mbatet.calories.service.ParseService;
 import org.mbatet.calories.service.WeightStatsService;
 import org.mbatet.calories.service.parser.CsvParser;
 import org.slf4j.Logger;
@@ -22,7 +23,6 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.ui.ExtendedModelMap;
 import org.springframework.ui.Model;
-import org.springframework.validation.annotation.Validated;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletResponse;
@@ -30,13 +30,12 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
-import java.util.Optional;
 
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes={HomeController.class, WeightStatsService.class, CsvParser.class, ServletContext.class})
+@SpringBootTest(classes={HomeController.class, WeightStatsService.class, ParseService.class, CsvParser.class, ServletContext.class})
 @ActiveProfiles("local_execution")
 public class HomeControllerTest {
 
@@ -144,7 +143,7 @@ public class HomeControllerTest {
         List<Interval> intervals = (List<Interval>)model.getAttribute("intervals");
         Interval intervalGeneral = (Interval)model.getAttribute("intervalGeneral");
         Interval lastWeek = (Interval)model.getAttribute("lastWeek");
-        TrackingChart stats = (TrackingChart ) model.getAttribute("stats");
+        GeneralStats stats = (GeneralStats) model.getAttribute("stats");
         Float calsLeft = (Float)model.getAttribute("calsLeft");
         Float maxWeight = (Float)model.getAttribute("maxWeight");
         Float minWeight = (Float)model.getAttribute("minWeight");

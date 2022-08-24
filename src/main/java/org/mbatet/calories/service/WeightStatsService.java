@@ -28,63 +28,29 @@ public class WeightStatsService {
 
 
 
-    public List<Dia> parse (String textToParse)
-    {
-
-        List<Dia> dies = new ArrayList<Dia>();
 
 
-        //log.debug("[m:parse] textToParse: " + textToParse);
-
-        /**
-         * Dividim en linies i processem cada linia una a una amb el parseLine(linia)
-         * El resultat de cada parseLine(linia) es un objecte de tipus CanviUnitat, validat,
-         * del que podrem extreure un o varis sqls per mostrar per pantalla.
-         * Un cop tenim totes les linies parsejades i obtenim un llistat de canvis, els ordenem
-         * Ordenem canvis per mida de codiAntic, a mes llarg, primer, aixi ens assegurem de fer primer els canvis concrets
-         * */
-        List<String> llistaLinies = new ArrayList<String>(Arrays.asList(textToParse.split("\n")));
-
-        llistaLinies.forEach( (final String linia) -> dies.add(parseLine(linia)));
-
-        //dies.forEach( (final Dia dia) -> { if(dia==null) dies.remove(dia); } );
-        while (dies.remove(null));
-
-
-        log.info("[m:parse] hem parsejat: " + dies.size()  + " dies");
-
-        Collections.sort(dies, new Dia.SortDiesByDate());
-
-        log.info("[m:parse] dies ordenats");
-
-        dies.forEach( (final Dia dia) -> log.debug("[m:parse] dia ordenat:" + dia.getDate()));
-
-        fillInMissingWeights(dies);
-        calculateAdjustedWeights(dies);
-
-        log.info("[m:parse] pesos ponderats");
-
-
-        return dies;
-
-    }
-
-
-    public TrackingChart getStatsFromIntervals(List<Interval> intervals)
+    public GeneralStats getStatsFromData(List<Dia> dies)
     {
 
 
-        TrackingChart stats = new TrackingChart();
+        List<Interval> intervals = getIntervals(dies);
+        Interval intervalGeneral = getIntervalGeneral(dies);
+        Interval lastWeek = getLastWeek(dies);
 
-        for(Interval interval: intervals){
-            stats.addInterval(interval);
-        }
+
+        GeneralStats stats = new GeneralStats(dies, intervals,  intervalGeneral, lastWeek);
+
 
         stats.calculate();
         //stats.validate();
 
+        Float calsLeft = getCalsLeft( lastWeek, stats.getWeightLossStats());
+
         return stats;
     }
+
+
 
     //Els intervals no ens valen perque poden no començar en dilluns
     public Interval getLastWeek(List<Dia> dies)
@@ -170,143 +136,11 @@ public class WeightStatsService {
         return intervals;
     }
 
-    public Float getMaxWeight( List<Dia> dies){
-        Float maxWeight = 0F;
-
-       for(Dia dia:dies){
-           if(dia.getWeight()!=null && dia.getWeight()>maxWeight) maxWeight=dia.getWeight();
-
-       }
-
-       log.info("[m:getMaxWeight] retornem " + maxWeight);
-        return maxWeight;
-
-    }
-
-    public Float getMinWeight( List<Dia> dies){
-        Float minWeight = 10000F;
-
-        for(Dia dia:dies){
-            if(dia.getWeight()!=null && dia.getWeight()<minWeight) minWeight=dia.getWeight();
-
-        }
-
-        log.info("[m:getMinWeight] retornem " + minWeight);
-        return minWeight;
-
-    }
 
 
 
-    private Dia parseLine(String line)  {
 
-        log.debug("[m:parseLine] line to parse: " + line);
-        Dia dia = parser.parse(line);
-        log.debug("[m:parseLine] dia: " + dia);
-
-
-
-        return dia;
-
-    }
-
-    private void fillInMissingWeights(List<Dia> dies)  {
-
-        //TODO: what do we do when days are missing? we should insert the dates even if there are void of data...
-        //TODO:guarantee there are not duplicate date
-
-        //Pel moment, omplim els pesos que no tinguem, que es elq ue mes necessitem, sense la resta podem passar
-
-
-        int apuntador = 0;
-        for(Dia dia: dies)
-        {
-            log.debug("[m:fillInMissingWeights][" + apuntador+"/"+ dies.size() + "] dia: " + dia);
-            if( dia.getWeight()==null )
-            {
-                //if(apuntador-1 >= 0 && apuntador+1 <= dies.size()) {
-
-                Float beforeWeight = dies.get(apuntador - 1).getWeight();// Aquest sempre esta ple
-                log.debug("[m:fillInMissingWeights][" + apuntador+"/"+ dies.size() + "] beforeWeight: " + beforeWeight);
-
-                Float afterWeight = null; //Pot estar tb buit!
-
-                int nextDay = apuntador+1;
-                while  ( afterWeight == null && nextDay < dies.size()){
-                   // log.debug("[m:fillInMissingWeights][" + apuntador+"/"+ dies.size() + "] nextDay: " + nextDay);
-                    afterWeight = dies.get(nextDay).getWeight();
-                    nextDay++;
-                }
-
-                //log.debug("[m:fillInMissingWeights][" + apuntador+"/"+ dies.size() + "] afterWeight: " + afterWeight);
-
-                //no sempre tenim afterWeight, si la última linia tampoc te el pes informat, el while no ha servit de res. Podem posar el pes del dia anterior o simplement descartar ek dua
-                if( afterWeight == null )
-                {
-                    log.error("[m:fillInMissingWeights][" + apuntador+"/"+ dies.size() + "] Error linia " + apuntador + " -  dia: " + dia + " - No podem estimar el darrer pes. Descartem aquest dia.");
-                    dies.remove(dia);
-                    return;
-                }
-
-
-                log.error("[m:fillInMissingWeights][" + apuntador+"/"+ dies.size() + "] Omplim el pes del dia " + apuntador + " amb la mitja entre beforeWeight i afterWeight = ((" + beforeWeight + " + " + afterWeight + ")/2)");
-                dia.setWeight( ((beforeWeight + afterWeight)) / 2f);
-
-
-            }
-            apuntador++;
-        }
-
-    }
-
-
-    private void calculateAdjustedWeights(List<Dia> dies)  {
-
-        Float[] array = new Float[dies.size()];
-
-        int i =0;
-        for(Dia dia:dies){
-            array[i++]=dia.getWeight();
-        }
-
-
-        i =0;
-        for(Dia dia:dies){
-
-            int first = i - Constants.DAYS_WINDOW;
-            int last = i + Constants.DAYS_WINDOW;
-
-            first = ( first < 0 ) ? 0 : first;
-            last = ( last > dies.size()-1) ? dies.size()-1 : last;
-
-
-            Float sumaPesos = 0F;
-            int numPesos = 0;
-            for(int apuntador=first; apuntador<=last; apuntador++)
-            {
-                //TODO: what do we do if weigh is empty?
-                if(array[apuntador]!=null) {
-                    sumaPesos += array[apuntador];
-                    numPesos++; //ho fem aixi perque podriem tenir algun pes a null
-                }
-            }
-
-
-            //Float pesPonderat = sumaPesos/(float)(last-first+1);
-            Float pesPonderat = sumaPesos/(float)(numPesos);
-
-            log.debug("i:" + i + " - first:" + first + " - last:" + last + " - pesPonderat =" + sumaPesos  + "/" + numPesos + " - pesPonderat: " + pesPonderat);
-
-
-            dia.setAdjustedWeight(pesPonderat);
-
-            i++;
-
-        }
-    }
-
-
-    public Float getCalsLeft(Interval lastWeek, WeightStats weightLossStats){
+    public Float getCalsLeft(Interval lastWeek, IntervalStats weightLossStats){
 
         //TODO: canviar-ho per getCaloriesBelowMaintenance, o millor encara, agafar el menor dels dos valors
         Float recommendedCals = weightLossStats.getRecomendedCals();
