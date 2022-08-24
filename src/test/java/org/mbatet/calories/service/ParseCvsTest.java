@@ -128,7 +128,9 @@ public class ParseCvsTest {
 
 
             Assert.assertTrue(interval.getAvgConsumedCals() !=0F );
-            Assert.assertTrue(interval.getWeigthDiff()!=0F);
+
+            //si el priemr pes i el darrer (adjusted o no) son iguals, weightdiff es 0, pot passar en intervals de manteniment per exemple
+            if(interval.getType()!=Constants.TYPE_WEIGHT_MAINTENANCE) Assert.assertTrue(interval.getWeigthDiff()!=0F);
             Assert.assertTrue(interval.getAvgConsumedCals() > 1000F );
             Assert.assertTrue(interval.getAvgActivityCals() < 4000F );
             Assert.assertTrue(interval.getWeigthDiff()<3);

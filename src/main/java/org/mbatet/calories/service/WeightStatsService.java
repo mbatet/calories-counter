@@ -127,6 +127,14 @@ public class WeightStatsService {
         //Interval intervalGeneral = new Interval(dies);
         //intervals.add(intervalGeneral);
 
+        log.info("[m:getIntervals] dies: " + dies);
+
+        if( dies == null ){
+            log.error("[m:getIntervals] dies no pot ser null");
+        }
+
+        log.info("[m:getIntervals] dies.size: " + dies.size());
+
         int count = 0;
         Interval interval = new Interval();
         intervals.add(interval);
@@ -134,6 +142,7 @@ public class WeightStatsService {
 
         for(Dia dia:dies){
 
+            log.info("[m:getIntervals][" + count + "] dia: " + dia);
             interval.addDia(dia);
             count++;
 
@@ -141,6 +150,7 @@ public class WeightStatsService {
                 interval = new Interval();
                 intervals.add(interval);
                 count=0;
+                log.info("[m:getIntervals][" + count + "] Obrim nou interval");
 
             }
         }

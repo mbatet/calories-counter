@@ -185,12 +185,15 @@ public class Interval {
 
         if( this.dies.size()==0 )
         {
+            log.warn("[m:getWeigthDiff] No tenim dies pel que retornem 0");
             return 0F;
         }
 
         //float weightDiff = getLastPes() - getFirstPes();
         float weightDiff = getLastAdjustedWeight() - getFirstAdjustedWeight();
         float rounded = Utils.round(weightDiff);
+
+        log.warn("[m:getWeigthDiff] " + getLastAdjustedWeight() + " - " + getFirstAdjustedWeight() + " = " + weightDiff );
 
         return rounded;
     }
@@ -238,7 +241,7 @@ public class Interval {
 
         for(Dia dia:dies){
             //perque podria ser que algun dia no tingeussim dades
-            log.info("[m:getAvgConsumedCals] dia.getConsumedCals: " + dia.getConsumedCals());
+            log.info("[m:getAvgConsumedCals][" + Constants.FORMAT_DATE.format(dia.getDate()) + "] dia.getConsumedCals: " + dia.getConsumedCals());
             if(dia.getConsumedCals()!=null) {
                 sumaCals += dia.getConsumedCals();
                 diesTotals++;
